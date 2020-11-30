@@ -1,14 +1,18 @@
 package model;
 
+import javafx.beans.property.StringProperty;
+
 import java.util.ArrayList;
 
-public class ProjectListModelManager implements ProjectListModel {
+public class PMSModelManager implements PMSModel {
     private ProjectList projectList;
     private Project focusProject;
+    private Requirement focusRequirement;
+    private Task focusTask;
 
     private boolean adding;
 
-    public ProjectListModelManager() {
+    public PMSModelManager() {
         this.projectList = new ProjectList();
         this.adding = false;
     }
@@ -25,6 +29,8 @@ public class ProjectListModelManager implements ProjectListModel {
     }
     //-------------------------------------
 
+
+    //-------Project-------
     @Override
     public int projectListSize() {
         return projectList.size();
@@ -67,13 +73,47 @@ public class ProjectListModelManager implements ProjectListModel {
     }
 
 
+    //-------Requirement-------
     @Override
-    public void addRequirement(Project project, Requirement requirement) {
-        project.getRequirementList().addRequirement(requirement);
+    public int requirementListSize() {
+        return focusProject.getRequirementList().size();
     }
 
     @Override
-    public void removeRequirement(Project project, Requirement requirement) {
-        project.getRequirementList().removeRequirement(requirement);
+    public void addRequirement(Requirement requirement) {
+        focusProject.getRequirementList().addRequirement(requirement);
     }
+
+    @Override
+    public void removeRequirement(Requirement requirement) {
+        focusProject.getRequirementList().removeRequirement(requirement);
+    }
+
+    @Override
+    public Requirement getRequirement(String id) {
+        return focusProject.getRequirementList().getRequirement(id);
+    }
+
+    @Override
+    public Requirement getRequirement(int index) {
+        return focusProject.getRequirementList().getRequirement(index);
+    }
+
+    @Override
+    public ArrayList<Requirement> getRequirementList() {
+        return focusProject.getRequirementList().getRequirementList();
+    }
+
+    @Override
+    public void setFocusRequirement(Requirement requirement) {
+        this.focusRequirement = requirement;
+    }
+
+    @Override
+    public Requirement getFocusRequirement() {
+        return focusRequirement;
+    }
+
+
+    //-------Task-------
 }

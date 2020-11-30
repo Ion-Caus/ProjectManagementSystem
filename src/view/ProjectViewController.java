@@ -7,7 +7,7 @@ import javafx.scene.layout.Region;
 
 import model.MyDate;
 import model.Project;
-import model.ProjectListModel;
+import model.PMSModel;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -23,14 +23,14 @@ public class ProjectViewController {
     @FXML private Button openReqListButton;
 
     private ViewHandler viewHandler;
-    private ProjectListModel model;
+    private PMSModel model;
     private Region root;
 
     public ProjectViewController() {
         //called by FXMLLoader
     }
 
-    public void init(ViewHandler viewHandler, ProjectListModel model, Region root) {
+    public void init(ViewHandler viewHandler, PMSModel model, Region root) {
         this.viewHandler = viewHandler;
         this.model = model;
         this.root = root;

@@ -5,19 +5,19 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 
-import model.ProjectListModel;
+import model.PMSModel;
 
 public class ViewHandler {
     private Scene currentScene;
     private Stage primaryStage;
-    private ProjectListModel model;
+    private PMSModel model;
 
     private ProjectListViewController projectListViewController;
     private ProjectViewController projectViewController;
     private RequirementViewController requirementViewController;
     private RequirementListViewController requirementListViewController;
 
-    public ViewHandler(ProjectListModel model) {
+    public ViewHandler(PMSModel model) {
         this.model = model;
         this.currentScene = new Scene(new Region());
     }

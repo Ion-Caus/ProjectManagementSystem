@@ -6,7 +6,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.Region;
 
 import model.Project;
-import model.ProjectListModel;
+import model.PMSModel;
 
 import java.util.Optional;
 
@@ -23,7 +23,7 @@ public class ProjectListViewController {
     //@FXML private TableView<
 
     private ViewHandler viewHandler;
-    private ProjectListModel model;
+    private PMSModel model;
     private Region root;
     private ProjectListViewModel viewModel;
 
@@ -31,7 +31,7 @@ public class ProjectListViewController {
         // called by FXMLLoader
     }
 
-    public void init(ViewHandler viewHandler, ProjectListModel model, Region root) {
+    public void init(ViewHandler viewHandler, PMSModel model, Region root) {
         this.viewHandler = viewHandler;
         this.model = model;
         this.root = root;
@@ -49,6 +49,7 @@ public class ProjectListViewController {
     }
 
     public void reset() {
+        errorLabel.setText("");
         viewModel.update();
     }
 
@@ -73,7 +74,7 @@ public class ProjectListViewController {
             viewHandler.openView("ProjectView");
         }
         catch (Exception e) {
-            errorLabel.setText(e.getMessage());
+            errorLabel.setText("Please select an item");
         }
     }
 
@@ -89,7 +90,7 @@ public class ProjectListViewController {
                 projectListTable.getSelectionModel().clearSelection();
             }
         } catch (Exception e) {
-            errorLabel.setText("Item not found: " + e.getMessage());
+            errorLabel.setText("Please select an item");
         }
     }
 
@@ -99,9 +100,10 @@ public class ProjectListViewController {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirmation");
         alert.setHeaderText(
-                "Removing project { " +
-                        selectedItem.getNameProperty().get() + ": " +
-                        selectedItem.getIdProperty().get() + " }");
+                "Removing the project \"" +
+                        selectedItem.getNameProperty().get() + "\"\n" +
+                        "with the id: " + selectedItem.getIdProperty().get()
+        );
 
         Optional<ButtonType> result = alert.showAndWait();
         return result.isPresent() && result.get() == ButtonType.OK;
