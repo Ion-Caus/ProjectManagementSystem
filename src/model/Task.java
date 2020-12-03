@@ -19,7 +19,7 @@ public class Task {
     public static final String STATUS_COMPLETED = "Completed";
 
     //TODO implement MyDate estimate
-    public Task(String title, String status, String type, String description, MyDate deadline) {//, MyDate estimate) {
+    public Task(String title, String status, String description, MyDate deadline) {//, MyDate estimate) {
         this.id = createTaskID();
 
         setTitle(title);

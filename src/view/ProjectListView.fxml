@@ -29,6 +29,10 @@
                                           <Button mnemonicParsing="false" onAction="#createProjectButton" prefWidth="65.0" text="Create" />
                                           <Button mnemonicParsing="false" onAction="#removeProjectButton" prefWidth="65.0" text="Remove" />
                                           <Button mnemonicParsing="false" onAction="#viewProjectButton" prefWidth="65.0" text="View" />
+                                          <Button mnemonicParsing="false" onAction="#openRequirementList" prefWidth="65.0" text="Req List">
+                                             <VBox.margin>
+                                                <Insets top="15.0" />
+                                             </VBox.margin></Button>
                                        </children>
                                        <padding>
                                           <Insets bottom="20.0" />

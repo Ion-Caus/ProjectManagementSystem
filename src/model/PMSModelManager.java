@@ -1,11 +1,10 @@
 package model;
 
-import javafx.beans.property.StringProperty;
-
 import java.util.ArrayList;
 
 public class PMSModelManager implements PMSModel {
     private ProjectList projectList;
+
     private Project focusProject;
     private Requirement focusRequirement;
     private Task focusTask;
@@ -116,4 +115,43 @@ public class PMSModelManager implements PMSModel {
 
 
     //-------Task-------
+    @Override
+    public int taskListSize() {
+        return focusRequirement.getTaskList().size();
+    }
+
+    @Override
+    public void addTask(Task task) {
+        focusRequirement.getTaskList().addTask(task);
+    }
+
+    @Override
+    public void removeTask(Task task) {
+        focusRequirement.getTaskList().removeTask(task);
+    }
+
+    @Override
+    public Task getTask(String id) {
+        return focusRequirement.getTaskList().getTask(id);
+    }
+
+    @Override
+    public Task getTask(int index) {
+        return focusRequirement.getTaskList().getTask(index);
+    }
+
+    @Override
+    public ArrayList<Task> getTaskList() {
+        return focusRequirement.getTaskList().getTaskList();
+    }
+
+    @Override
+    public void setFocusTask(Task task) {
+        this.focusTask = task;
+    }
+
+    @Override
+    public Task getFocusTask() {
+        return focusTask;
+    }
 }

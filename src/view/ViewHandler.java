@@ -14,8 +14,10 @@ public class ViewHandler {
 
     private ProjectListViewController projectListViewController;
     private ProjectViewController projectViewController;
-    private RequirementViewController requirementViewController;
     private RequirementListViewController requirementListViewController;
+    private RequirementViewController requirementViewController;
+    private TaskListViewController taskListViewController;
+    private TaskViewController taskViewController;
 
     public ViewHandler(PMSModel model) {
         this.model = model;
@@ -41,6 +43,12 @@ public class ViewHandler {
                 break;
             case "RequirementView":
                 root = loadRequirementViewGUI("RequirementView.fxml");
+                break;
+            case  "TaskListView":
+                root = loadTaskListViewGUI("TaskListView.fxml");
+                break;
+            case "TaskView":
+                root = loadTaskViewGUI("TaskView.fxml");
                 break;
         }
         currentScene.setRoot(root);
@@ -135,5 +143,43 @@ public class ViewHandler {
             requirementViewController.reset();
         }
         return requirementViewController.getRoot();
+    }
+
+    public Region loadTaskListViewGUI(String fxmlFile) {
+        if (taskListViewController == null) {
+            try {
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(getClass().getResource(fxmlFile));
+                Region root = loader.load();
+                taskListViewController = loader.getController();
+                taskListViewController.init(this, model, root);
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        else {
+            taskListViewController.reset();
+        }
+        return taskListViewController.getRoot();
+    }
+
+    public Region loadTaskViewGUI(String fxmlFile) {
+        if (taskViewController == null) {
+            try {
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(getClass().getResource(fxmlFile));
+                Region root = loader.load();
+                taskViewController = loader.getController();
+                taskViewController.init(this, model, root);
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        else {
+            taskViewController.reset();
+        }
+        return taskViewController.getRoot();
     }
 }

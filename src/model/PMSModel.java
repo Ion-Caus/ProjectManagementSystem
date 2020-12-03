@@ -36,4 +36,16 @@ public interface PMSModel {
     Requirement getFocusRequirement();
 
     //----Task----
+    int taskListSize();
+
+    void addTask(Task task);
+    void removeTask(Task task);
+
+    Task getTask(String id);
+    Task getTask(int index);
+
+    ArrayList<Task> getTaskList();
+
+    void setFocusTask(Task task);
+    Task getFocusTask();
 }
