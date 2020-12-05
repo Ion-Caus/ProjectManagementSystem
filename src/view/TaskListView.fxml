@@ -9,8 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<VBox prefHeight="400.0" prefWidth="600.0" userData="Task List" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.TaskListViewController">
+<VBox prefHeight="400.0" prefWidth="750.0" userData="Task List" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.TaskListViewController">
    <children>
       <HBox prefHeight="403.0" prefWidth="600.0">
          <children>
@@ -40,12 +39,14 @@
                   <Insets bottom="20.0" />
                </padding>
             </VBox>
-            <TableView fx:id="taskListTable" prefHeight="400.0" prefWidth="500.0">
+            <TableView fx:id="taskListTable" prefHeight="400.0" prefWidth="700.0">
                <columns>
-                  <TableColumn fx:id="idTaskColumn" prefWidth="71.0" text="ID" />
+                  <TableColumn fx:id="idTaskColumn" prefWidth="60.0" text="ID" />
                   <TableColumn fx:id="titleTaskColumn" minWidth="0.0" prefWidth="150.0" text="Title" />
-                  <TableColumn fx:id="statusTaskColumn" minWidth="0.0" prefWidth="98.0" text="Status" />
-                  <TableColumn fx:id="deadlineTaskColumn" minWidth="0.0" prefWidth="136.1612548828125" text="Deadline" />
+                  <TableColumn fx:id="statusTaskColumn" minWidth="0.0" prefWidth="100.0" text="Status" />
+                  <TableColumn fx:id="deadlineTaskColumn" minWidth="0.0" prefWidth="100.0" text="Deadline" />
+                  <TableColumn fx:id="estimateTaskColumn" minWidth="0.0" prefWidth="100.0" text="Estimate" />
+                  <TableColumn fx:id="responsibleTeamMemberTaskColumn" minWidth="0.0" prefWidth="100.0" text="Responsible" />
                </columns>
             </TableView>
          </children>

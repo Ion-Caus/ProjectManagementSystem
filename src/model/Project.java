@@ -13,19 +13,21 @@ public class Project {
 
     private RequirementList requirementList;
     //TODO private Team team;
+    private Team team;
 
     public static final String STATUS_CREATED = "Created";
     public static final String STATUS_IN_PROCESS = "In process";
     public static final String STATUS_WAITING_FOR_APPROVAL = "Waiting for approval";
     public static final String STATUS_FINISHED = "Finished";
 
-    public Project(String name,String status, MyDate deadline) {//, MyDate estimate) {
+    public Project(String name,String status, MyDate deadline, MyDate estimate, Team team) {
         this.id = createProjectID();
 
         setName(name);
         setStatus(status);
         setDeadline(deadline);
-        //setEstimate(estimate);
+        setEstimate(estimate);
+        setTeam(team);
         this.timeSpent = 0;
 
         this.requirementList = new RequirementList();
@@ -73,15 +75,26 @@ public class Project {
         this.deadline = deadline.copy();
     }
 
-    private MyDate getEstimate() {
+    public MyDate getEstimate() {
         return this.estimate.copy();
     }
 
-    private void setEstimate(MyDate estimate) {
+    public void setEstimate(MyDate estimate) {
         if (estimate == null) {
             throw new IllegalArgumentException("Null estimate given");
         }
         this.estimate = estimate.copy();
+    }
+
+    public Team getTeam() {
+        return team;
+    }
+
+    public void setTeam(Team team) {
+        if (team == null) {
+            throw new IllegalArgumentException("Null team given");
+        }
+        this.team = team;
     }
 
     public int getTimeSpent() {
@@ -91,10 +104,6 @@ public class Project {
     public void setTimeSpent(int timeSpent) {
         this.timeSpent = timeSpent;
     }
-
-    //TODO
-    //public void setTeam(){}
-    //public Team getTeam(){}
 
     //TODO public ProductOwner getProductOwner(){}
     //TODO public ScrumMaster getScrumMaster(){}
@@ -119,6 +128,7 @@ public class Project {
                 ", estimate=" + estimate +
                 ", timeSpent=" + timeSpent +
                 ", requirementList=" + requirementList +
+                ", team=" + team.getTeamMemberNameList() +
                 '}';
     }
 }

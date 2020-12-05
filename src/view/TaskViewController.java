@@ -8,6 +8,7 @@ import javafx.scene.layout.Region;
 import model.MyDate;
 import model.PMSModel;
 import model.Task;
+import org.controlsfx.control.textfield.TextFields;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -17,9 +18,12 @@ public class TaskViewController {
     @FXML private TextArea descriptionArea;
     @FXML private ComboBox<String> statusBox;
     @FXML private DatePicker deadlinePicker;
+    @FXML private DatePicker estimatePicker;
     @FXML private TextField idField;
     @FXML private TextField hoursWorkedField;
     @FXML private Label errorLabel;
+
+    @FXML private TextField responsibleTeamMemberInputField;
 
     private ViewHandler viewHandler;
     private PMSModel model;
@@ -48,10 +52,18 @@ public class TaskViewController {
             statusBox.getItems().addAll(Task.STATUS_NOT_STARTED, Task.STATUS_IN_PROCESS, Task.STATUS_COMPLETED);
             statusBox.getSelectionModel().select(Task.STATUS_NOT_STARTED);
 
-            // Date Picker
+            // Deadline Picker
             deadlinePicker.setEditable(false);
             // setting the default deadline in 2 weeks
             deadlinePicker.setValue(LocalDate.now().plusDays(14));
+
+            // Estimate Picker
+            estimatePicker.setEditable(false);
+            // setting the default deadline in 1 weeks
+            estimatePicker.setValue(LocalDate.now().plusDays(7));
+
+            // responsible Team Member
+            responsibleTeamMemberInputField.setText("");
 
             idField.setText("");
             hoursWorkedField.setText("");
@@ -66,7 +78,7 @@ public class TaskViewController {
             statusBox.getItems().addAll(Task.STATUS_NOT_STARTED, Task.STATUS_IN_PROCESS, Task.STATUS_COMPLETED);
             statusBox.getSelectionModel().select(model.getFocusTask().getStatus());
 
-            // Date Picker
+            // Deadline Picker
             deadlinePicker.setValue(
                     LocalDate.of(
                             model.getFocusTask().getDeadline().getYear(),
@@ -74,18 +86,39 @@ public class TaskViewController {
                             model.getFocusTask().getDeadline().getDay()
                     ));
 
+            // Estimate Picker
+            estimatePicker.setValue(
+                    LocalDate.of(
+                            model.getFocusTask().getEstimate().getYear(),
+                            model.getFocusTask().getEstimate().getMonth(),
+                            model.getFocusTask().getEstimate().getDay()
+                    ));
+
             idField.setText(model.getFocusTask().getId());
             hoursWorkedField.setText(Integer.toString(model.getFocusTask().getTimeSpent()));
         }
         errorLabel.setText("");
 
-        //formatting the DatePicker from MM/dd/yyyy to dd/MM/yyyy
+        //add Employees
+        //TODO change to project team list
+        TextFields.bindAutoCompletion(responsibleTeamMemberInputField, model.getEmployeeNameList());
+
+        //formatting the Deadline DatePicker from MM/dd/yyyy to dd/MM/yyyy
         deadlinePicker.getEditor().setText(
                 DateTimeFormatter.ofPattern("dd/MM/yyyy").format(deadlinePicker.getValue())
         );
         deadlinePicker.setOnAction(event -> {
             deadlinePicker.getEditor().setText(
                     DateTimeFormatter.ofPattern("dd/MM/yyyy").format(deadlinePicker.getValue())
+            );
+        });
+        //formatting the Estimate DatePicker from MM/dd/yyyy to dd/MM/yyyy
+        estimatePicker.getEditor().setText(
+                DateTimeFormatter.ofPattern("dd/MM/yyyy").format(estimatePicker.getValue())
+        );
+        estimatePicker.setOnAction(event -> {
+            estimatePicker.getEditor().setText(
+                    DateTimeFormatter.ofPattern("dd/MM/yyyy").format(estimatePicker.getValue())
             );
         });
     }
@@ -103,13 +136,21 @@ public class TaskViewController {
                     deadlinePicker.getValue().getYear()
             );
 
+            MyDate estimate = new MyDate(
+                    estimatePicker.getValue().getDayOfMonth(),
+                    estimatePicker.getValue().getMonthValue(),
+                    estimatePicker.getValue().getYear()
+            );
+
             // Add button was pressed
             if (model.isAdding()) {
                 model.addTask(new Task(
                         titleField.getText(),
                         statusBox.getSelectionModel().getSelectedItem(),
                         descriptionArea.getText(),
-                        deadline
+                        deadline,
+                        estimate,
+                        model.getEmployee(responsibleTeamMemberInputField.getText())
                 ));
             }
             // View button was pressed
@@ -118,6 +159,8 @@ public class TaskViewController {
                 model.getFocusTask().setDescription(descriptionArea.getText());
                 model.getFocusTask().setStatus(statusBox.getSelectionModel().getSelectedItem());
                 model.getFocusTask().setDeadline(deadline);
+                model.getFocusTask().setEstimate(estimate);
+                model.getFocusTask().setResponsibleTeamMember(model.getEmployee(responsibleTeamMemberInputField.getText()));
             }
             viewHandler.openView("TaskListView");
         }

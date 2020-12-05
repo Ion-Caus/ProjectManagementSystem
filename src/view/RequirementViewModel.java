@@ -9,6 +9,8 @@ public class RequirementViewModel {
     private StringProperty statusProperty;
     private StringProperty typeProperty;
     private StringProperty deadlineProperty;
+    private StringProperty estimateProperty;
+    private StringProperty responsibleTeamMemberProperty;
 
     public RequirementViewModel(Requirement requirement) {
         this.idProperty = new SimpleStringProperty(requirement.getId());
@@ -16,6 +18,8 @@ public class RequirementViewModel {
         this.statusProperty = new SimpleStringProperty(requirement.getStatus());
         this.typeProperty = new SimpleStringProperty(requirement.getType());
         this.deadlineProperty = new SimpleStringProperty(requirement.getDeadline().toString());
+        this.estimateProperty = new SimpleStringProperty(requirement.getEstimate().toString());
+        this.responsibleTeamMemberProperty = new SimpleStringProperty(requirement.getResponsibleTeamMember().getName());
     }
 
     public StringProperty getIdProperty() {
@@ -36,5 +40,13 @@ public class RequirementViewModel {
 
     public StringProperty getDeadlineProperty() {
         return deadlineProperty;
+    }
+
+    public StringProperty getEstimateProperty() {
+        return estimateProperty;
+    }
+
+    public StringProperty getResponsibleTeamMemberProperty() {
+        return responsibleTeamMemberProperty;
     }
 }

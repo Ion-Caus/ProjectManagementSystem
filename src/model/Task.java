@@ -12,21 +12,22 @@ public class Task {
     private MyDate estimate;
     private int timeSpent;
 
-    //TODO private TeamMember teamMember;
+    private TeamMember responsibleTeamMember;
 
     public static final String STATUS_NOT_STARTED = "Not started";
     public static final String STATUS_IN_PROCESS = "In Process";
     public static final String STATUS_COMPLETED = "Completed";
 
-    //TODO implement MyDate estimate
-    public Task(String title, String status, String description, MyDate deadline) {//, MyDate estimate) {
+    public Task(String title, String status, String description, MyDate deadline, MyDate estimate, TeamMember responsibleTeamMember) {
         this.id = createTaskID();
 
         setTitle(title);
         setStatus(status);
         setDescription(description);
         setDeadline(deadline);
-        //setEstimate(estimate);
+        setEstimate(estimate);
+        setResponsibleTeamMember(responsibleTeamMember);
+
         this.timeSpent = 0;
 
     }
@@ -87,6 +88,17 @@ public class Task {
         this.estimate = estimate.copy();
     }
 
+    public TeamMember getResponsibleTeamMember() {
+        return responsibleTeamMember;
+    }
+
+    public void setResponsibleTeamMember(TeamMember responsibleTeamMember) {
+        if (responsibleTeamMember == null) {
+            throw new IllegalArgumentException("Null responsible team member given");
+        }
+        this.responsibleTeamMember = responsibleTeamMember;
+    }
+
     public int getTimeSpent() {
         return timeSpent;
     }
@@ -114,6 +126,7 @@ public class Task {
                 ", description='" + description + '\'' +
                 ", deadline=" + deadline +
                 ", estimate=" + estimate +
+                ", responsibleTeamMember=" + responsibleTeamMember.getName() +
                 ", timeSpent=" + timeSpent +
                 '}';
     }

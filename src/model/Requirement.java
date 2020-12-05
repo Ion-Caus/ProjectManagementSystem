@@ -14,7 +14,7 @@ public class Requirement {
     private int timeSpent;
 
     private TaskList taskList;
-    //TODO private TeamMember teamMember;
+    private TeamMember responsibleTeamMember;
 
     public static final String STATUS_UNASSIGNED = "Unassigned";
     public static final String STATUS_IN_PROCESS = "In Process";
@@ -27,8 +27,7 @@ public class Requirement {
     public static final String TYPE_PROJECT_RELATED = "Project Related";
 
 
-    //TODO implement MyDate estimate
-    public Requirement(String title, String status, String type, String description, MyDate deadline) {//, MyDate estimate) {
+    public Requirement(String title, String status, String type, String description, MyDate deadline, MyDate estimate, TeamMember responsibleTeamMember) {
         this.id = createReqID();
 
         setTitle(title);
@@ -36,7 +35,8 @@ public class Requirement {
         setType(type);
         setDescription(description);
         setDeadline(deadline);
-        //setEstimate(estimate);
+        setEstimate(estimate);
+        setResponsibleTeamMember(responsibleTeamMember);
         this.timeSpent = 0;
 
         this.taskList = new TaskList();
@@ -113,6 +113,17 @@ public class Requirement {
         this.estimate = estimate.copy();
     }
 
+    public TeamMember getResponsibleTeamMember() {
+        return responsibleTeamMember;
+    }
+
+    public void setResponsibleTeamMember(TeamMember responsibleTeamMember) {
+        if (responsibleTeamMember == null) {
+            throw new IllegalArgumentException("Null responsible team member given");
+        }
+        this.responsibleTeamMember = responsibleTeamMember;
+    }
+
     public int getTimeSpent() {
         return timeSpent;
     }
@@ -146,6 +157,7 @@ public class Requirement {
                 ", description='" + description + '\'' +
                 ", deadline=" + deadline +
                 ", estimate=" + estimate +
+                ", responsibleTeamMember=" + responsibleTeamMember.getName() +
                 ", timeSpent=" + timeSpent +
                 ", taskList=" + taskList +
                 '}';

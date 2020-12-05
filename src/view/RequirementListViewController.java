@@ -14,6 +14,8 @@ public class RequirementListViewController {
     @FXML private TableColumn<RequirementViewModel, String> statusRequirementColumn;
     @FXML private TableColumn<RequirementViewModel, String> typeRequirementColumn;
     @FXML private TableColumn<RequirementViewModel, String> deadlineRequirementColumn;
+    @FXML private TableColumn<RequirementViewModel, String> estimateRequirementColumn;
+    @FXML private TableColumn<RequirementViewModel, String> responsibleTeamMemberReqColumn;
     @FXML private Label errorLabel;
 
     private ViewHandler viewHandler;
@@ -37,6 +39,8 @@ public class RequirementListViewController {
         statusRequirementColumn.setCellValueFactory(cellData -> cellData.getValue().getStatusProperty());
         typeRequirementColumn.setCellValueFactory(cellData -> cellData.getValue().getTypeProperty());
         deadlineRequirementColumn.setCellValueFactory(cellData -> cellData.getValue().getDeadlineProperty());
+        estimateRequirementColumn.setCellValueFactory(cellData -> cellData.getValue().getEstimateProperty());
+        responsibleTeamMemberReqColumn.setCellValueFactory(cellData -> cellData.getValue().getResponsibleTeamMemberProperty());
         requirementListTable.setItems(viewModel.getRequirementList());
 
         errorLabel.setText("");

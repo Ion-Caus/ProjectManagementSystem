@@ -38,7 +38,7 @@
                                           <Insets bottom="20.0" />
                                        </padding>
                                     </VBox>
-                                    <Label fx:id="errorLabel" alignment="TOP_LEFT" prefHeight="140.0" prefWidth="117.0" text="Error Label" textFill="#ff1313" textOverrun="CLIP" wrapText="true">
+                                    <Label fx:id="errorLabelProject" alignment="TOP_LEFT" prefHeight="140.0" prefWidth="117.0" text="Error Label" textFill="#ff1313" textOverrun="CLIP" wrapText="true">
                                        <padding>
                                           <Insets left="10.0" right="10.0" top="5.0" />
                                        </padding>
@@ -53,10 +53,11 @@
                               </VBox>
                               <TableView fx:id="projectListTable" prefHeight="367.0" prefWidth="588.0">
                                 <columns>
-                                  <TableColumn fx:id="idProjectColumn" prefWidth="71.0" text="ID" />
-                                  <TableColumn fx:id="nameProjectColumn" minWidth="0.0" prefWidth="197.0" text="Name" />
-                                    <TableColumn fx:id="statusProjectColumn" minWidth="0.0" prefWidth="125.0" text="Status" />
-                                    <TableColumn fx:id="deadlineProjectColumn" prefWidth="89.0" text="Deadline" />
+                                  <TableColumn fx:id="idProjectColumn" prefWidth="70.0" text="ID" />
+                                  <TableColumn fx:id="nameProjectColumn" minWidth="0.0" prefWidth="120.0" text="Name" />
+                                    <TableColumn fx:id="statusProjectColumn" minWidth="0.0" prefWidth="105.0" text="Status" />
+                                    <TableColumn fx:id="deadlineProjectColumn" prefWidth="100.0" text="Deadline" />
+                                    <TableColumn fx:id="estimateProjectColumn" prefWidth="100.0" text="Estimate" />
                                 </columns>
                               </TableView>
                            </children>
@@ -71,10 +72,21 @@
                      <children>
                         <HBox prefHeight="372.0" prefWidth="600.0">
                            <children>
-                              <VBox alignment="CENTER" prefHeight="372.0" prefWidth="325.0" spacing="20.0">
+                              <VBox alignment="BOTTOM_CENTER" prefHeight="372.0" prefWidth="325.0" spacing="20.0">
                                  <children>
                                     <Button mnemonicParsing="false" onAction="#addMemberButton" prefWidth="65.0" text="Add" />
                                     <Button mnemonicParsing="false" onAction="#removeMemberButton" prefWidth="65.0" text="Remove" />
+                                    <Label fx:id="errorLabelEmployee" alignment="TOP_LEFT" prefHeight="140.0" prefWidth="251.0" text="Error Label" textFill="#ff1313" textOverrun="CLIP" wrapText="true">
+                                       <padding>
+                                          <Insets left="10.0" right="10.0" top="5.0" />
+                                       </padding>
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets top="30.0" />
+                                       </VBox.margin>
+                                    </Label>
                                  </children>
                               </VBox>
                               <TableView fx:id="employeeListTable" prefHeight="372.0" prefWidth="450.0">

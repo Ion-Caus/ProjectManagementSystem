@@ -15,6 +15,8 @@ public class TaskListViewController {
     @FXML private TableColumn<TaskViewModel, String> titleTaskColumn;
     @FXML private TableColumn<TaskViewModel, String> statusTaskColumn;
     @FXML private TableColumn<TaskViewModel, String> deadlineTaskColumn;
+    @FXML private TableColumn<TaskViewModel, String> estimateTaskColumn;
+    @FXML private TableColumn<TaskViewModel, String> responsibleTeamMemberTaskColumn;
     @FXML private Label errorLabel;
 
     private ViewHandler viewHandler;
@@ -37,6 +39,8 @@ public class TaskListViewController {
         titleTaskColumn.setCellValueFactory(cellDate -> cellDate.getValue().getTitleProperty());
         statusTaskColumn.setCellValueFactory(cellDate -> cellDate.getValue().getStatusProperty());
         deadlineTaskColumn.setCellValueFactory(cellDate -> cellDate.getValue().getDeadlineProperty());
+        estimateTaskColumn.setCellValueFactory(cellData -> cellData.getValue().getEstimateProperty());
+        responsibleTeamMemberTaskColumn.setCellValueFactory(cellData -> cellData.getValue().getResponsibleTeamMemberProperty());
         taskListTable.setItems(viewModel.getTaskList());
 
         errorLabel.setText("");

@@ -9,6 +9,8 @@ import model.MyDate;
 import model.PMSModel;
 import model.Requirement;
 
+import org.controlsfx.control.textfield.TextFields;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -18,11 +20,14 @@ public class RequirementViewController {
     @FXML private ComboBox<String> statusBox;
     @FXML private ComboBox<String> typeBox;
     @FXML private DatePicker deadlinePicker;
+    @FXML private DatePicker estimatePicker;
     @FXML private TextField idField;
     @FXML private TextField hoursWorkedField;
     @FXML private Label errorLabel;
 
     @FXML private Button openTaskListButton;
+
+    @FXML private TextField responsibleTeamMemberInputField;
 
     private ViewHandler viewHandler;
     private PMSModel model;
@@ -49,24 +54,32 @@ public class RequirementViewController {
 
             // Status ComboBox
             statusBox.getItems().removeAll(statusBox.getItems());
-            statusBox.getItems().addAll(Requirement.STATUS_UNASSIGNED, Requirement.STATUS_IN_PROCESS,Requirement.STATUS_WAITING_FOR_APPROVAL, Requirement.STATUS_APPROVED, Requirement.STATUS_REJECTED);
-            statusBox.getSelectionModel().select(Requirement.STATUS_UNASSIGNED);
+            statusBox.getItems().addAll(Requirement.STATUS_IN_PROCESS,Requirement.STATUS_WAITING_FOR_APPROVAL, Requirement.STATUS_APPROVED, Requirement.STATUS_REJECTED);
+            statusBox.getSelectionModel().select(Requirement.STATUS_IN_PROCESS);
 
             // Type ComboBox
             typeBox.getItems().removeAll(typeBox.getItems());
             typeBox.getItems().addAll(Requirement.TYPE_FUNCTIONAL, Requirement.TYPE_NON_FUNCTIONAL, Requirement.TYPE_PROJECT_RELATED);
             typeBox.getSelectionModel().select(Requirement.TYPE_FUNCTIONAL);
 
-            // Date Picker
+            // Deadline Picker
             deadlinePicker.setEditable(false);
             // setting the default deadline in 2 weeks
             deadlinePicker.setValue(LocalDate.now().plusDays(14));
+
+            // Estimate Picker
+            estimatePicker.setEditable(false);
+            // setting the default deadline in 1 weeks
+            estimatePicker.setValue(LocalDate.now().plusDays(7));
+
+            // responsible Team Member
+            responsibleTeamMemberInputField.setText("");
 
             idField.setText("");
             hoursWorkedField.setText("");
 
             // Open Task List Button
-            openTaskListButton.setDisable(true);
+            openTaskListButton.setVisible(false);
         }
         // View button was pressed
         else {
@@ -75,7 +88,7 @@ public class RequirementViewController {
 
             // Status ComboBox
             statusBox.getItems().removeAll(statusBox.getItems());
-            statusBox.getItems().addAll(Requirement.STATUS_UNASSIGNED, Requirement.STATUS_IN_PROCESS, Requirement.STATUS_WAITING_FOR_APPROVAL, Requirement.STATUS_APPROVED, Requirement.STATUS_REJECTED);
+            statusBox.getItems().addAll(Requirement.STATUS_IN_PROCESS, Requirement.STATUS_WAITING_FOR_APPROVAL, Requirement.STATUS_APPROVED, Requirement.STATUS_REJECTED);
             statusBox.getSelectionModel().select(model.getFocusRequirement().getStatus());
 
             // Type ComboBox
@@ -83,7 +96,7 @@ public class RequirementViewController {
             typeBox.getItems().addAll(Requirement.TYPE_FUNCTIONAL, Requirement.TYPE_NON_FUNCTIONAL, Requirement.TYPE_PROJECT_RELATED);
             typeBox.getSelectionModel().select(model.getFocusRequirement().getType());
 
-            // Date Picker
+            // Deadline Picker
             deadlinePicker.setValue(
                     LocalDate.of(
                             model.getFocusRequirement().getDeadline().getYear(),
@@ -91,21 +104,46 @@ public class RequirementViewController {
                             model.getFocusRequirement().getDeadline().getDay()
                     ));
 
+            // Estimate Picker
+            estimatePicker.setValue(
+                    LocalDate.of(
+                            model.getFocusRequirement().getEstimate().getYear(),
+                            model.getFocusRequirement().getEstimate().getMonth(),
+                            model.getFocusRequirement().getEstimate().getDay()
+                    ));
+
+            // responsible Team Member
+            responsibleTeamMemberInputField.setText(model.getFocusRequirement().getResponsibleTeamMember().getName());
+            System.out.println(model.getFocusRequirement().getResponsibleTeamMember().getName());
+
             idField.setText(model.getFocusRequirement().getId());
             hoursWorkedField.setText(Integer.toString(model.getFocusRequirement().getTimeSpent()));
 
             // Open Task List Button
-            openTaskListButton.setDisable(false);
+            openTaskListButton.setVisible(true);
         }
         errorLabel.setText("");
 
-        //formatting the DatePicker from MM/dd/yyyy to dd/MM/yyyy
+       //add Employees
+        //TODO change to project team list
+        TextFields.bindAutoCompletion(responsibleTeamMemberInputField, model.getEmployeeNameList());
+
+        //formatting the Deadline DatePicker from MM/dd/yyyy to dd/MM/yyyy
         deadlinePicker.getEditor().setText(
                 DateTimeFormatter.ofPattern("dd/MM/yyyy").format(deadlinePicker.getValue())
         );
         deadlinePicker.setOnAction(event -> {
             deadlinePicker.getEditor().setText(
                     DateTimeFormatter.ofPattern("dd/MM/yyyy").format(deadlinePicker.getValue())
+            );
+        });
+        //formatting the Estimate DatePicker from MM/dd/yyyy to dd/MM/yyyy
+        estimatePicker.getEditor().setText(
+                DateTimeFormatter.ofPattern("dd/MM/yyyy").format(estimatePicker.getValue())
+        );
+        estimatePicker.setOnAction(event -> {
+            estimatePicker.getEditor().setText(
+                    DateTimeFormatter.ofPattern("dd/MM/yyyy").format(estimatePicker.getValue())
             );
         });
     }
@@ -129,6 +167,12 @@ public class RequirementViewController {
                     deadlinePicker.getValue().getYear()
             );
 
+            MyDate estimate = new MyDate(
+                    estimatePicker.getValue().getDayOfMonth(),
+                    estimatePicker.getValue().getMonthValue(),
+                    estimatePicker.getValue().getYear()
+            );
+
             // Add button was pressed
             if (model.isAdding()) {
                 model.addRequirement(new Requirement(
@@ -136,7 +180,9 @@ public class RequirementViewController {
                         statusBox.getSelectionModel().getSelectedItem(),
                         typeBox.getSelectionModel().getSelectedItem(),
                         descriptionArea.getText(),
-                        deadline
+                        deadline,
+                        estimate,
+                        model.getEmployee(responsibleTeamMemberInputField.getText())
                 ));
             }
             // View button was pressed
@@ -146,6 +192,8 @@ public class RequirementViewController {
                 model.getFocusRequirement().setStatus(statusBox.getSelectionModel().getSelectedItem());
                 model.getFocusRequirement().setType(typeBox.getSelectionModel().getSelectedItem());
                 model.getFocusRequirement().setDeadline(deadline);
+                model.getFocusRequirement().setEstimate(estimate);
+                model.getFocusRequirement().setResponsibleTeamMember(model.getEmployee(responsibleTeamMemberInputField.getText()));
             }
             viewHandler.openView("RequirementListView");
         }
@@ -153,7 +201,6 @@ public class RequirementViewController {
             errorLabel.setText(e.getMessage());
         }
     }
-
     @FXML
     private void cancelButtonPressed() {
         viewHandler.openView("RequirementListView");
@@ -165,5 +212,4 @@ public class RequirementViewController {
             submitButtonPressed();
         }
     }
-
 }

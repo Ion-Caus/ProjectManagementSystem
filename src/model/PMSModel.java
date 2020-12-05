@@ -7,6 +7,22 @@ public interface PMSModel {
     boolean isAdding();
     void setAdding(boolean status);
 
+    //----Employee----
+    int employeeListSize();
+
+    void addEmployee(TeamMember teamMember);
+    void removeEmployee(TeamMember teamMember);
+
+    TeamMember getEmployee(String name);
+    TeamMember getEmployee(int index);
+
+    ArrayList<TeamMember> getEmployeeList();
+    ArrayList<String> getEmployeeNameList();
+
+    //----Team----
+    TeamMember getTeamMember(String name);
+    TeamMember getTeamMember(int index);
+
     //----Project----
     int projectListSize();
 

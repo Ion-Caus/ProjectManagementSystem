@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" prefHeight="400.0" prefWidth="780.0" spacing="10.0" userData="Requirement List" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.RequirementListViewController">
+<VBox alignment="CENTER" prefHeight="400.0" prefWidth="850.0" spacing="10.0" userData="Requirement List" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.RequirementListViewController">
    <children>
       <HBox prefHeight="403.0" prefWidth="600.0">
          <children>
@@ -44,13 +44,15 @@
                   <Insets bottom="20.0" />
                </padding>
             </VBox>
-            <TableView fx:id="requirementListTable" prefHeight="400.0" prefWidth="692.0">
+            <TableView fx:id="requirementListTable" prefHeight="400.0" prefWidth="800.0">
                <columns>
-                  <TableColumn fx:id="idRequirementColumn" prefWidth="71.0" text="ID" />
+                  <TableColumn fx:id="idRequirementColumn" prefWidth="60.0" text="ID" />
                   <TableColumn fx:id="titleRequirementColumn" minWidth="0.0" prefWidth="150.0" text="Title" />
-                  <TableColumn fx:id="statusRequirementColumn" minWidth="0.0" prefWidth="98.0" text="Status" />
-                  <TableColumn fx:id="typeRequirementColumn" prefWidth="147.0" text="Type" />
-                  <TableColumn fx:id="deadlineRequirementColumn" minWidth="0.0" prefWidth="136.1612548828125" text="Deadline" />
+                  <TableColumn fx:id="statusRequirementColumn" minWidth="0.0" prefWidth="100.0" text="Status" />
+                  <TableColumn fx:id="typeRequirementColumn" prefWidth="100.0" text="Type" />
+                  <TableColumn fx:id="deadlineRequirementColumn" minWidth="0.0" prefWidth="100.0" text="Deadline" />
+                  <TableColumn fx:id="estimateRequirementColumn" minWidth="0.0" prefWidth="100.0" text="Estimate" />
+                  <TableColumn fx:id="responsibleTeamMemberReqColumn" minWidth="0.0" prefWidth="100.0" text="Resposible" />
                </columns>
             </TableView>
          </children>
