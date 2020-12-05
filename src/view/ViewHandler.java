@@ -19,6 +19,8 @@ public class ViewHandler {
     private TaskListViewController taskListViewController;
     private TaskViewController taskViewController;
 
+    private CreateTeamViewController createTeamViewController;
+
     public ViewHandler(PMSModel model) {
         this.model = model;
         this.currentScene = new Scene(new Region());
@@ -49,6 +51,9 @@ public class ViewHandler {
                 break;
             case "TaskView":
                 root = loadTaskViewGUI("TaskView.fxml");
+                break;
+            case "CreateTeamView":
+                root = loadCreateTeamViewGUI("CreateTeamView.fxml");
                 break;
         }
         currentScene.setRoot(root);
@@ -181,5 +186,24 @@ public class ViewHandler {
             taskViewController.reset();
         }
         return taskViewController.getRoot();
+    }
+
+    public Region loadCreateTeamViewGUI(String fxmlFile) {
+        if (createTeamViewController == null) {
+            try {
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(getClass().getResource(fxmlFile));
+                Region root = loader.load();
+                createTeamViewController = loader.getController();
+                createTeamViewController.init(this, model, root);
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        else {
+            createTeamViewController.reset();
+        }
+        return createTeamViewController.getRoot();
     }
 }

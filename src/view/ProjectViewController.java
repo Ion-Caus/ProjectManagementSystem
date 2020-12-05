@@ -21,9 +21,8 @@ public class ProjectViewController {
     @FXML private TextField hoursWorkedField;
     @FXML private Label errorLabel;
 
+    @FXML private Button addTeamMemberButton;
     @FXML private Button openReqListButton;
-
-    @FXML private TextField teamMembersInputField;
 
     private ViewHandler viewHandler;
     private PMSModel model;
@@ -67,6 +66,9 @@ public class ProjectViewController {
 
             // Open Requirement List Button
             openReqListButton.setVisible(false);
+
+            // Add Team Button
+            addTeamMemberButton.setText("Add");
         }
         // View button was pressed
         else {
@@ -98,12 +100,13 @@ public class ProjectViewController {
 
             // Open Requirement List Button
             openReqListButton.setVisible(true);
+
+            // Add Team Button
+            if (model.getFocusProject().getTeam().size() > 0) {
+                addTeamMemberButton.setText("View");
+            }
         }
         errorLabel.setText("");
-
-        //add Employees
-        teamMembersInputField.setText("");
-        TextFields.bindAutoCompletion(teamMembersInputField, model.getEmployeeNameList());
 
         //formatting the Deadline DatePicker from MM/dd/yyyy to dd/MM/yyyy
         deadlinePicker.getEditor().setText(
@@ -129,8 +132,41 @@ public class ProjectViewController {
         return root;
     }
 
+    private void createProject() {
+        MyDate deadline = new MyDate(
+                deadlinePicker.getValue().getDayOfMonth(),
+                deadlinePicker.getValue().getMonthValue(),
+                deadlinePicker.getValue().getYear()
+        );
+
+        MyDate estimate = new MyDate(
+                estimatePicker.getValue().getDayOfMonth(),
+                estimatePicker.getValue().getMonthValue(),
+                estimatePicker.getValue().getYear()
+        );
+
+        // Add button was pressed
+        if (model.isAdding()) {
+            model.addProject(
+                    new Project(
+                            nameField.getText(),
+                            statusBox.getSelectionModel().getSelectedItem(),
+                            deadline,
+                            estimate,
+                            new Team()
+                    ));
+        }
+        // View button was pressed
+        else {
+            model.getFocusProject().setName(nameField.getText());
+            model.getFocusProject().setStatus(statusBox.getSelectionModel().getSelectedItem());
+            model.getFocusProject().setDeadline(deadline);
+            model.getFocusProject().setEstimate(estimate);
+        }
+    }
+
     @FXML
-    private  void openRequirementList() {
+    private void openRequirementList() {
         submitButtonPressed();
         viewHandler.openView("RequirementListView");
     }
@@ -138,40 +174,10 @@ public class ProjectViewController {
     @FXML
     private void submitButtonPressed() {
         try {
-            MyDate deadline = new MyDate(
-                    deadlinePicker.getValue().getDayOfMonth(),
-                    deadlinePicker.getValue().getMonthValue(),
-                    deadlinePicker.getValue().getYear()
-            );
-
-            MyDate estimate = new MyDate(
-                    estimatePicker.getValue().getDayOfMonth(),
-                    estimatePicker.getValue().getMonthValue(),
-                    estimatePicker.getValue().getYear()
-            );
-
-            // Add button was pressed
-            if (model.isAdding()) {
-                model.addProject(
-                        new Project(
-                                nameField.getText(),
-                                statusBox.getSelectionModel().getSelectedItem(),
-                                deadline,
-                                estimate,
-                                new Team() //TODO add team
-                        ));
-            }
-            // View button was pressed
-            else {
-                model.getFocusProject().setName(nameField.getText());
-                model.getFocusProject().setStatus(statusBox.getSelectionModel().getSelectedItem());
-                model.getFocusProject().setDeadline(deadline);
-                model.getFocusProject().setEstimate(estimate);
-            }
-
+            createProject();
             viewHandler.openView("ProjectListView");
         }
-        catch (IllegalArgumentException e) {
+        catch (Exception e) {
             errorLabel.setText(e.getMessage());
         }
     }
@@ -190,7 +196,15 @@ public class ProjectViewController {
 
     @FXML
     private void addTeamMemberButton() {
-        // TODO store local members
-        //when submit then add all members to team
+        try {
+            createProject();
+            // setting the last created project to focus
+            model.setFocusProject(model.getProjectList().get(model.projectListSize()-1));
+            model.setAdding(false);
+            viewHandler.openView("CreateTeamView");
+        }
+        catch (Exception e) {
+            errorLabel.setText("Please enter the name of project first");
+        }
     }
 }

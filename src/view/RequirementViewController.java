@@ -54,8 +54,8 @@ public class RequirementViewController {
 
             // Status ComboBox
             statusBox.getItems().removeAll(statusBox.getItems());
-            statusBox.getItems().addAll(Requirement.STATUS_IN_PROCESS,Requirement.STATUS_WAITING_FOR_APPROVAL, Requirement.STATUS_APPROVED, Requirement.STATUS_REJECTED);
-            statusBox.getSelectionModel().select(Requirement.STATUS_IN_PROCESS);
+            statusBox.getItems().addAll(Requirement.STATUS_NOT_STARTED, Requirement.STATUS_IN_PROCESS,Requirement.STATUS_WAITING_FOR_APPROVAL, Requirement.STATUS_APPROVED, Requirement.STATUS_REJECTED);
+            statusBox.getSelectionModel().select(Requirement.STATUS_NOT_STARTED);
 
             // Type ComboBox
             typeBox.getItems().removeAll(typeBox.getItems());
@@ -88,7 +88,7 @@ public class RequirementViewController {
 
             // Status ComboBox
             statusBox.getItems().removeAll(statusBox.getItems());
-            statusBox.getItems().addAll(Requirement.STATUS_IN_PROCESS, Requirement.STATUS_WAITING_FOR_APPROVAL, Requirement.STATUS_APPROVED, Requirement.STATUS_REJECTED);
+            statusBox.getItems().addAll(Requirement.STATUS_NOT_STARTED, Requirement.STATUS_IN_PROCESS, Requirement.STATUS_WAITING_FOR_APPROVAL, Requirement.STATUS_APPROVED, Requirement.STATUS_REJECTED);
             statusBox.getSelectionModel().select(model.getFocusRequirement().getStatus());
 
             // Type ComboBox
@@ -114,7 +114,6 @@ public class RequirementViewController {
 
             // responsible Team Member
             responsibleTeamMemberInputField.setText(model.getFocusRequirement().getResponsibleTeamMember().getName());
-            System.out.println(model.getFocusRequirement().getResponsibleTeamMember().getName());
 
             idField.setText(model.getFocusRequirement().getId());
             hoursWorkedField.setText(Integer.toString(model.getFocusRequirement().getTimeSpent()));

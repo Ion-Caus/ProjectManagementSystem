@@ -27,7 +27,7 @@ public class Team {
 
     public TeamMember getTeamMember(String name) {
         if (name == null || name.isEmpty()) {
-            throw new IllegalArgumentException("Add the responsible team member");
+            throw new IllegalArgumentException("Name can not be empty");
         }
 
         for (TeamMember teamMember: teamMemberList) {
@@ -35,7 +35,7 @@ public class Team {
                 return teamMember;
             }
         }
-        throw new IllegalArgumentException("No employee with the name " + name);
+        throw new IllegalArgumentException("No employee with the name \"" + name +"\"");
     }
     public TeamMember getTeamMember(int index) {
         return teamMemberList.get(index);

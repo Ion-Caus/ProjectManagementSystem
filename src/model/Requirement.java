@@ -16,7 +16,7 @@ public class Requirement {
     private TaskList taskList;
     private TeamMember responsibleTeamMember;
 
-    public static final String STATUS_UNASSIGNED = "Unassigned";
+    public static final String STATUS_NOT_STARTED = "Not Started";
     public static final String STATUS_IN_PROCESS = "In Process";
     public static final String STATUS_WAITING_FOR_APPROVAL = "Waiting For Approval";
     public static final String STATUS_APPROVED = "Approved";
@@ -138,7 +138,7 @@ public class Requirement {
     }
 
     private static boolean validStatus(String status) {
-        String[] statuses = {STATUS_UNASSIGNED, STATUS_IN_PROCESS, STATUS_WAITING_FOR_APPROVAL, STATUS_APPROVED, STATUS_REJECTED};
+        String[] statuses = {STATUS_NOT_STARTED, STATUS_IN_PROCESS, STATUS_WAITING_FOR_APPROVAL, STATUS_APPROVED, STATUS_REJECTED};
         return Arrays.asList(statuses).contains(status);
     }
 
