@@ -31,7 +31,7 @@ public class ProjectListViewController {
     private Region root;
 
     private ProjectListViewModel viewModelProject;
-    private EmployeesViewModel viewModelTeam;
+    private EmployeesViewModel viewModelEmployee;
 
     public ProjectListViewController() {
         // called by FXMLLoader
@@ -43,7 +43,7 @@ public class ProjectListViewController {
         this.root = root;
 
         this.viewModelProject = new ProjectListViewModel(model);
-        this.viewModelTeam = new EmployeesViewModel(model);
+        this.viewModelEmployee = new EmployeesViewModel(model);
 
         //---- Project List ----
         idProjectColumn.setCellValueFactory(cellData -> cellData.getValue().getIdProperty());
@@ -61,7 +61,7 @@ public class ProjectListViewController {
         //---- Employee List ----
         nameEmployeeColumn.setCellValueFactory(cellData -> cellData.getValue().getNameProperty());
 
-        employeeListTable.setItems(viewModelTeam.getEmployeeList());
+        employeeListTable.setItems(viewModelEmployee.getEmployeeList());
 
         errorLabelEmployee.setText("");
         //-----------------------
@@ -72,7 +72,7 @@ public class ProjectListViewController {
         viewModelProject.update();
 
         errorLabelEmployee.setText("");
-        viewModelTeam.update();
+        viewModelEmployee.update();
     }
 
     public Region getRoot() {
@@ -106,18 +106,19 @@ public class ProjectListViewController {
         try {
             ProjectViewModel selectItem = projectListTable.getSelectionModel().getSelectedItem();
 
-            if (confirmation()) {
+            if (confirmationProject()) {
                 Project project = model.getProject(selectItem.getIdProperty().get());
                 model.removeProject(project);
                 viewModelProject.removeProject(project);
                 projectListTable.getSelectionModel().clearSelection();
             }
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             errorLabelProject.setText("Please select an item");
         }
     }
 
-    public boolean confirmation() {
+    private boolean confirmationProject() {
         ProjectViewModel selectedItem = projectListTable.getSelectionModel().getSelectedItem();
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -143,7 +144,7 @@ public class ProjectListViewController {
             viewHandler.openView("RequirementListView");
         }
         catch (Exception e) {
-            errorLabelProject.setText("Please select an item");
+            errorLabelEmployee.setText("Please select an item");
         }
     }
 
@@ -151,6 +152,8 @@ public class ProjectListViewController {
     //---------- EmployeeList Methods ----------
     @FXML
     private void addMemberButton() {
+        errorLabelEmployee.setText("");
+
         TextInputDialog dialog = new TextInputDialog();
         dialog.setTitle("Employee");
         dialog.setHeaderText("What is the name of employee");
@@ -159,12 +162,36 @@ public class ProjectListViewController {
 
         if (result.isPresent()) {
             model.addEmployee(new TeamMember(result.get()));
-            viewModelTeam.update();
+            viewModelEmployee.update();
         }
     }
 
     @FXML
     private void removeMemberButton() {
+        try {
+            TeamMemberViewModel selectItem = employeeListTable.getSelectionModel().getSelectedItem();
 
+            if (confirmationEmployee()) {
+                TeamMember employee = model.getEmployee(selectItem.getNameProperty().get());
+                model.removeEmployee(employee);
+                viewModelEmployee.removeEmployee(employee);
+                employeeListTable.getSelectionModel().clearSelection();
+            }
+        }
+        catch (Exception e) {
+            errorLabelEmployee.setText("Please select an item");
+        }
+    }
+    private boolean confirmationEmployee() {
+        TeamMemberViewModel selectedItem = employeeListTable.getSelectionModel().getSelectedItem();
+
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmation");
+        alert.setHeaderText(
+                "Removing the employee \"" + selectedItem.getNameProperty().get()
+        );
+
+        Optional<ButtonType> result = alert.showAndWait();
+        return result.isPresent() && result.get() == ButtonType.OK;
     }
 }

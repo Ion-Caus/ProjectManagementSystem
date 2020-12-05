@@ -5,6 +5,9 @@ import javafx.scene.control.*;
 import javafx.scene.layout.Region;
 
 import model.PMSModel;
+import model.Requirement;
+
+import java.util.Optional;
 
 
 public class RequirementListViewController {
@@ -93,7 +96,33 @@ public class RequirementListViewController {
 
     @FXML
     private void removeRequirementButton() {
+        try {
+            RequirementViewModel selectItem = requirementListTable.getSelectionModel().getSelectedItem();
 
+            if (confirmation()) {
+                Requirement requirement = model.getRequirement(selectItem.getIdProperty().get());
+                model.removeRequirement(requirement);
+                viewModel.removeRequirement(requirement);
+                requirementListTable.getSelectionModel().clearSelection();
+            }
+        } catch (Exception e) {
+            errorLabel.setText("Please select an item");
+        }
+    }
+
+    public boolean confirmation() {
+        RequirementViewModel selectedItem = requirementListTable.getSelectionModel().getSelectedItem();
+
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmation");
+        alert.setHeaderText(
+                "Removing the requirement \"" +
+                        selectedItem.getTitleProperty().get() + "\"\n" +
+                        "with the id: " + selectedItem.getIdProperty().get()
+        );
+
+        Optional<ButtonType> result = alert.showAndWait();
+        return result.isPresent() && result.get() == ButtonType.OK;
     }
 
     @FXML
