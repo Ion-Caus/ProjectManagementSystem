@@ -7,8 +7,6 @@ import javafx.scene.layout.Region;
 
 import model.*;
 
-import org.controlsfx.control.textfield.TextFields;
-
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -112,20 +110,16 @@ public class ProjectViewController {
         deadlinePicker.getEditor().setText(
                 DateTimeFormatter.ofPattern("dd/MM/yyyy").format(deadlinePicker.getValue())
         );
-        deadlinePicker.setOnAction(event -> {
-            deadlinePicker.getEditor().setText(
-                    DateTimeFormatter.ofPattern("dd/MM/yyyy").format(deadlinePicker.getValue())
-            );
-        });
+        deadlinePicker.setOnAction(event -> deadlinePicker.getEditor().setText(
+                DateTimeFormatter.ofPattern("dd/MM/yyyy").format(deadlinePicker.getValue())
+        ));
         //formatting the Estimate DatePicker from MM/dd/yyyy to dd/MM/yyyy
         estimatePicker.getEditor().setText(
                 DateTimeFormatter.ofPattern("dd/MM/yyyy").format(estimatePicker.getValue())
         );
-        estimatePicker.setOnAction(event -> {
-            estimatePicker.getEditor().setText(
-                    DateTimeFormatter.ofPattern("dd/MM/yyyy").format(estimatePicker.getValue())
-            );
-        });
+        estimatePicker.setOnAction(event -> estimatePicker.getEditor().setText(
+                DateTimeFormatter.ofPattern("dd/MM/yyyy").format(estimatePicker.getValue())
+        ));
     }
 
     public Region getRoot() {
@@ -178,7 +172,7 @@ public class ProjectViewController {
             viewHandler.openView("ProjectListView");
         }
         catch (Exception e) {
-            errorLabel.setText(e.getMessage());
+            errorLabel.setText("Please enter the name of project first.");
         }
     }
 

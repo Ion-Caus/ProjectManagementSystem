@@ -1,7 +1,6 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.IllformedLocaleException;
 
 public class Team {
     private ArrayList<TeamMember> teamMemberList;
@@ -26,16 +25,12 @@ public class Team {
     }
 
     public TeamMember getTeamMember(String name) {
-        if (name == null || name.isEmpty()) {
-            throw new IllegalArgumentException("Name can not be empty");
-        }
-
         for (TeamMember teamMember: teamMemberList) {
             if (teamMember.getName().equals(name)) {
                 return teamMember;
             }
         }
-        throw new IllegalArgumentException("No employee with the name \"" + name +"\"");
+        throw new IllegalArgumentException("No person with the name \"" + name +"\"");
     }
     public TeamMember getTeamMember(int index) {
         return teamMemberList.get(index);

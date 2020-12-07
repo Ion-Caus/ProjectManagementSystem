@@ -123,28 +123,23 @@ public class RequirementViewController {
         }
         errorLabel.setText("");
 
-       //add Employees
-        //TODO change to project team list
-        TextFields.bindAutoCompletion(responsibleTeamMemberInputField, model.getEmployeeNameList());
+        //add Responsible Team Member from Team List
+        TextFields.bindAutoCompletion(responsibleTeamMemberInputField, model.getFocusProject().getTeam().getTeamMemberNameList());
 
         //formatting the Deadline DatePicker from MM/dd/yyyy to dd/MM/yyyy
         deadlinePicker.getEditor().setText(
                 DateTimeFormatter.ofPattern("dd/MM/yyyy").format(deadlinePicker.getValue())
         );
-        deadlinePicker.setOnAction(event -> {
-            deadlinePicker.getEditor().setText(
-                    DateTimeFormatter.ofPattern("dd/MM/yyyy").format(deadlinePicker.getValue())
-            );
-        });
+        deadlinePicker.setOnAction(event -> deadlinePicker.getEditor().setText(
+                DateTimeFormatter.ofPattern("dd/MM/yyyy").format(deadlinePicker.getValue())
+        ));
         //formatting the Estimate DatePicker from MM/dd/yyyy to dd/MM/yyyy
         estimatePicker.getEditor().setText(
                 DateTimeFormatter.ofPattern("dd/MM/yyyy").format(estimatePicker.getValue())
         );
-        estimatePicker.setOnAction(event -> {
-            estimatePicker.getEditor().setText(
-                    DateTimeFormatter.ofPattern("dd/MM/yyyy").format(estimatePicker.getValue())
-            );
-        });
+        estimatePicker.setOnAction(event -> estimatePicker.getEditor().setText(
+                DateTimeFormatter.ofPattern("dd/MM/yyyy").format(estimatePicker.getValue())
+        ));
     }
 
     public Region getRoot() {
@@ -174,6 +169,10 @@ public class RequirementViewController {
 
             // Add button was pressed
             if (model.isAdding()) {
+                if (titleField.getText().isEmpty()) {
+                    throw new IllegalArgumentException("Please enter the title of requirement first.");
+                }
+
                 model.addRequirement(new Requirement(
                         titleField.getText(),
                         statusBox.getSelectionModel().getSelectedItem(),
@@ -181,7 +180,7 @@ public class RequirementViewController {
                         descriptionArea.getText(),
                         deadline,
                         estimate,
-                        model.getEmployee(responsibleTeamMemberInputField.getText())
+                        model.getTeamMember(responsibleTeamMemberInputField.getText())
                 ));
             }
             // View button was pressed
@@ -192,7 +191,7 @@ public class RequirementViewController {
                 model.getFocusRequirement().setType(typeBox.getSelectionModel().getSelectedItem());
                 model.getFocusRequirement().setDeadline(deadline);
                 model.getFocusRequirement().setEstimate(estimate);
-                model.getFocusRequirement().setResponsibleTeamMember(model.getEmployee(responsibleTeamMemberInputField.getText()));
+                model.getFocusRequirement().setResponsibleTeamMember(model.getTeamMember(responsibleTeamMemberInputField.getText()));
             }
             viewHandler.openView("RequirementListView");
         }
@@ -208,6 +207,9 @@ public class RequirementViewController {
     @FXML
     private void onEnter(ActionEvent event) {
         if (event.getSource() == titleField) {
+            responsibleTeamMemberInputField.requestFocus();
+        }
+        else if (event.getSource() == responsibleTeamMemberInputField) {
             submitButtonPressed();
         }
     }

@@ -48,7 +48,16 @@ public class PMSModelManager implements PMSModel {
 
     @Override
     public TeamMember getTeamMember(String name) {
-        return focusProject.getTeam().getTeamMember(name);
+        if (name == null || name.isEmpty()) {
+            throw new IllegalArgumentException("Please enter the team member's name");
+        }
+
+        try {
+            return focusProject.getTeam().getTeamMember(name);
+        }
+        catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("No team member with the name \"" + name + "\" in project's team.");
+        }
     }
 
     @Override
@@ -58,7 +67,16 @@ public class PMSModelManager implements PMSModel {
 
     @Override
     public TeamMember getEmployee(String name) {
-        return employeeList.getTeamMember(name);
+        if (name == null || name.isEmpty()) {
+            throw new IllegalArgumentException("Please enter the employee's name");
+        }
+
+        try {
+            return employeeList.getTeamMember(name);
+        }
+        catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("No employee with the name \"" + name + "\" in your employee list.");
+        }
     }
 
     @Override

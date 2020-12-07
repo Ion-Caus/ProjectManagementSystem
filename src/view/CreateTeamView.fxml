@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="TOP_CENTER" prefHeight="275.0" prefWidth="290.0" spacing="10.0" userData="Create Team" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.CreateTeamViewController">
+<VBox alignment="TOP_CENTER" prefHeight="291.0" prefWidth="290.0" spacing="10.0" userData="Create Team" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.CreateTeamViewController">
    <children>
       <Label prefWidth="77.0" text="Team">
          <font>
@@ -23,11 +23,11 @@
          </children>
       </HBox>
       <ListView fx:id="teamMembersListView" prefHeight="175.0" prefWidth="270.0" />
-      <Label fx:id="errorLabel" alignment="CENTER" prefHeight="20.0" prefWidth="270.0" text="errorLabel" textFill="#ff0202" />
+      <Label fx:id="errorLabel" alignment="CENTER" prefHeight="125.0" prefWidth="270.0" text="errorLabel" textAlignment="CENTER" textFill="#ff0202" wrapText="true" />
       <HBox alignment="CENTER" prefHeight="40.0" prefWidth="357.0" spacing="25.0">
          <children>
             <Button mnemonicParsing="false" onAction="#removeTeamMemberButton" prefWidth="80.0" text="Remove" />
-            <Button mnemonicParsing="false" onAction="#submitButtonPressed" prefWidth="80.0" text="Submit" />
+            <Button mnemonicParsing="false" onAction="#backButtonPressed" prefWidth="80.0" text="Back" />
          </children>
       </HBox>
    </children>

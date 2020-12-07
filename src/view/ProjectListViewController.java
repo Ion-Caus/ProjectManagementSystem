@@ -187,9 +187,7 @@ public class ProjectListViewController {
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirmation");
-        alert.setHeaderText(
-                "Removing the employee \"" + selectedItem.getNameProperty().get()
-        );
+        alert.setHeaderText("Removing the employee \"" + selectedItem.getNameProperty().get() + "\"");
 
         Optional<ButtonType> result = alert.showAndWait();
         return result.isPresent() && result.get() == ButtonType.OK;

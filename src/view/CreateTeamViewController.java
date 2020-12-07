@@ -68,7 +68,7 @@ public class CreateTeamViewController {
     @FXML void removeTeamMemberButton() {
         try {
             String name = teamMembersListView.getSelectionModel().getSelectedItem();
-
+            assert name != null;
             if (confirmation()) {
                 TeamMember teamMember = model.getTeamMember(name);
                 model.getFocusProject().getTeam().removeTeamMember(teamMember);
@@ -84,6 +84,10 @@ public class CreateTeamViewController {
     private boolean confirmation() {
         String selectedItem = teamMembersListView.getSelectionModel().getSelectedItem();
 
+        if (selectedItem == null) {
+            throw new IllegalArgumentException("Please select an item");
+        }
+
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirmation");
         alert.setHeaderText("Removing the team member \"" + selectedItem + "\"");
@@ -92,7 +96,7 @@ public class CreateTeamViewController {
         return result.isPresent() && result.get() == ButtonType.OK;
     }
 
-    @FXML void submitButtonPressed() {
+    @FXML void backButtonPressed() {
         viewHandler.openView("ProjectView");
     }
 

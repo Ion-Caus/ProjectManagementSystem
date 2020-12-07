@@ -99,28 +99,23 @@ public class TaskViewController {
         }
         errorLabel.setText("");
 
-        //add Employees
-        //TODO change to project team list
-        TextFields.bindAutoCompletion(responsibleTeamMemberInputField, model.getEmployeeNameList());
+        //add Responsible Team Member from Team List
+        TextFields.bindAutoCompletion(responsibleTeamMemberInputField, model.getFocusProject().getTeam().getTeamMemberNameList());
 
         //formatting the Deadline DatePicker from MM/dd/yyyy to dd/MM/yyyy
         deadlinePicker.getEditor().setText(
                 DateTimeFormatter.ofPattern("dd/MM/yyyy").format(deadlinePicker.getValue())
         );
-        deadlinePicker.setOnAction(event -> {
-            deadlinePicker.getEditor().setText(
-                    DateTimeFormatter.ofPattern("dd/MM/yyyy").format(deadlinePicker.getValue())
-            );
-        });
+        deadlinePicker.setOnAction(event -> deadlinePicker.getEditor().setText(
+                DateTimeFormatter.ofPattern("dd/MM/yyyy").format(deadlinePicker.getValue())
+        ));
         //formatting the Estimate DatePicker from MM/dd/yyyy to dd/MM/yyyy
         estimatePicker.getEditor().setText(
                 DateTimeFormatter.ofPattern("dd/MM/yyyy").format(estimatePicker.getValue())
         );
-        estimatePicker.setOnAction(event -> {
-            estimatePicker.getEditor().setText(
-                    DateTimeFormatter.ofPattern("dd/MM/yyyy").format(estimatePicker.getValue())
-            );
-        });
+        estimatePicker.setOnAction(event -> estimatePicker.getEditor().setText(
+                DateTimeFormatter.ofPattern("dd/MM/yyyy").format(estimatePicker.getValue())
+        ));
     }
 
     public Region getRoot() {
@@ -144,13 +139,17 @@ public class TaskViewController {
 
             // Add button was pressed
             if (model.isAdding()) {
+                if (titleField.getText().isEmpty()) {
+                    throw new IllegalArgumentException("Please enter the title of task first.");
+                }
+
                 model.addTask(new Task(
                         titleField.getText(),
                         statusBox.getSelectionModel().getSelectedItem(),
                         descriptionArea.getText(),
                         deadline,
                         estimate,
-                        model.getEmployee(responsibleTeamMemberInputField.getText())
+                        model.getTeamMember(responsibleTeamMemberInputField.getText())
                 ));
             }
             // View button was pressed
@@ -160,7 +159,7 @@ public class TaskViewController {
                 model.getFocusTask().setStatus(statusBox.getSelectionModel().getSelectedItem());
                 model.getFocusTask().setDeadline(deadline);
                 model.getFocusTask().setEstimate(estimate);
-                model.getFocusTask().setResponsibleTeamMember(model.getEmployee(responsibleTeamMemberInputField.getText()));
+                model.getFocusTask().setResponsibleTeamMember(model.getTeamMember(responsibleTeamMemberInputField.getText()));
             }
             viewHandler.openView("TaskListView");
         }
@@ -177,6 +176,9 @@ public class TaskViewController {
     @FXML
     private void onEnter(ActionEvent event) {
         if (event.getSource() == titleField) {
+            responsibleTeamMemberInputField.requestFocus();
+        }
+        else if (event.getSource() == responsibleTeamMemberInputField) {
             submitButtonPressed();
         }
     }
