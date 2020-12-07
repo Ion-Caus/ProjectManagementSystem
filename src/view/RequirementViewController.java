@@ -5,7 +5,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.Region;
 
-import model.MyDate;
 import model.PMSModel;
 import model.Requirement;
 
@@ -97,20 +96,10 @@ public class RequirementViewController {
             typeBox.getSelectionModel().select(model.getFocusRequirement().getType());
 
             // Deadline Picker
-            deadlinePicker.setValue(
-                    LocalDate.of(
-                            model.getFocusRequirement().getDeadline().getYear(),
-                            model.getFocusRequirement().getDeadline().getMonth(),
-                            model.getFocusRequirement().getDeadline().getDay()
-                    ));
+            deadlinePicker.setValue(model.getFocusRequirement().getDeadline());
 
             // Estimate Picker
-            estimatePicker.setValue(
-                    LocalDate.of(
-                            model.getFocusRequirement().getEstimate().getYear(),
-                            model.getFocusRequirement().getEstimate().getMonth(),
-                            model.getFocusRequirement().getEstimate().getDay()
-                    ));
+            estimatePicker.setValue(model.getFocusRequirement().getEstimate());
 
             // responsible Team Member
             responsibleTeamMemberInputField.setText(model.getFocusRequirement().getResponsibleTeamMember().getName());
@@ -126,19 +115,19 @@ public class RequirementViewController {
         //add Responsible Team Member from Team List
         TextFields.bindAutoCompletion(responsibleTeamMemberInputField, model.getFocusProject().getTeam().getTeamMemberNameList());
 
-        //formatting the Deadline DatePicker from MM/dd/yyyy to dd/MM/yyyy
+        //formatting the Deadline DatePicker from MM/dd/yyyy to yyyy-MM-dd
         deadlinePicker.getEditor().setText(
-                DateTimeFormatter.ofPattern("dd/MM/yyyy").format(deadlinePicker.getValue())
+                DateTimeFormatter.ofPattern("yyyy-MM-dd").format(deadlinePicker.getValue())
         );
         deadlinePicker.setOnAction(event -> deadlinePicker.getEditor().setText(
-                DateTimeFormatter.ofPattern("dd/MM/yyyy").format(deadlinePicker.getValue())
+                DateTimeFormatter.ofPattern("yyyy-MM-dd").format(deadlinePicker.getValue())
         ));
-        //formatting the Estimate DatePicker from MM/dd/yyyy to dd/MM/yyyy
+        //formatting the Estimate DatePicker from MM/dd/yyyy to yyyy-MM-dd
         estimatePicker.getEditor().setText(
-                DateTimeFormatter.ofPattern("dd/MM/yyyy").format(estimatePicker.getValue())
+                DateTimeFormatter.ofPattern("yyyy-MM-dd").format(estimatePicker.getValue())
         );
         estimatePicker.setOnAction(event -> estimatePicker.getEditor().setText(
-                DateTimeFormatter.ofPattern("dd/MM/yyyy").format(estimatePicker.getValue())
+                DateTimeFormatter.ofPattern("yyyy-MM-dd").format(estimatePicker.getValue())
         ));
     }
 
@@ -155,18 +144,6 @@ public class RequirementViewController {
     @FXML
     private void submitButtonPressed() {
         try {
-            MyDate deadline = new MyDate(
-                    deadlinePicker.getValue().getDayOfMonth(),
-                    deadlinePicker.getValue().getMonthValue(),
-                    deadlinePicker.getValue().getYear()
-            );
-
-            MyDate estimate = new MyDate(
-                    estimatePicker.getValue().getDayOfMonth(),
-                    estimatePicker.getValue().getMonthValue(),
-                    estimatePicker.getValue().getYear()
-            );
-
             // Add button was pressed
             if (model.isAdding()) {
                 if (titleField.getText().isEmpty()) {
@@ -178,8 +155,8 @@ public class RequirementViewController {
                         statusBox.getSelectionModel().getSelectedItem(),
                         typeBox.getSelectionModel().getSelectedItem(),
                         descriptionArea.getText(),
-                        deadline,
-                        estimate,
+                        deadlinePicker.getValue(),
+                        estimatePicker.getValue(),
                         model.getTeamMember(responsibleTeamMemberInputField.getText())
                 ));
             }
@@ -189,8 +166,8 @@ public class RequirementViewController {
                 model.getFocusRequirement().setDescription(descriptionArea.getText());
                 model.getFocusRequirement().setStatus(statusBox.getSelectionModel().getSelectedItem());
                 model.getFocusRequirement().setType(typeBox.getSelectionModel().getSelectedItem());
-                model.getFocusRequirement().setDeadline(deadline);
-                model.getFocusRequirement().setEstimate(estimate);
+                model.getFocusRequirement().setDeadline(deadlinePicker.getValue());
+                model.getFocusRequirement().setEstimate(estimatePicker.getValue());
                 model.getFocusRequirement().setResponsibleTeamMember(model.getTeamMember(responsibleTeamMemberInputField.getText()));
             }
             viewHandler.openView("RequirementListView");

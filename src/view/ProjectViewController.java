@@ -78,20 +78,10 @@ public class ProjectViewController {
             statusBox.getSelectionModel().select(model.getFocusProject().getStatus());
 
             // Deadline Picker
-            deadlinePicker.setValue(
-                    LocalDate.of(
-                            model.getFocusProject().getDeadline().getYear(),
-                            model.getFocusProject().getDeadline().getMonth(),
-                            model.getFocusProject().getDeadline().getDay()
-                    ));
+            deadlinePicker.setValue(model.getFocusProject().getDeadline());
 
             // Estimate Picker
-            estimatePicker.setValue(
-                    LocalDate.of(
-                            model.getFocusProject().getEstimate().getYear(),
-                            model.getFocusProject().getEstimate().getMonth(),
-                            model.getFocusProject().getEstimate().getDay()
-                    ));
+            estimatePicker.setValue(model.getFocusProject().getEstimate());
 
             idField.setText(model.getFocusProject().getId());
             hoursWorkedField.setText(Integer.toString(model.getFocusProject().getTimeSpent()));
@@ -106,19 +96,19 @@ public class ProjectViewController {
         }
         errorLabel.setText("");
 
-        //formatting the Deadline DatePicker from MM/dd/yyyy to dd/MM/yyyy
+        //formatting the Deadline DatePicker from MM/dd/yyyy to yyyy-MM-dd
         deadlinePicker.getEditor().setText(
-                DateTimeFormatter.ofPattern("dd/MM/yyyy").format(deadlinePicker.getValue())
+                DateTimeFormatter.ofPattern("yyyy-MM-dd").format(deadlinePicker.getValue())
         );
         deadlinePicker.setOnAction(event -> deadlinePicker.getEditor().setText(
-                DateTimeFormatter.ofPattern("dd/MM/yyyy").format(deadlinePicker.getValue())
+                DateTimeFormatter.ofPattern("yyyy-MM-dd").format(deadlinePicker.getValue())
         ));
-        //formatting the Estimate DatePicker from MM/dd/yyyy to dd/MM/yyyy
+        //formatting the Estimate DatePicker from MM/dd/yyyy to yyyy-MM-dd
         estimatePicker.getEditor().setText(
-                DateTimeFormatter.ofPattern("dd/MM/yyyy").format(estimatePicker.getValue())
+                DateTimeFormatter.ofPattern("yyyy-MM-dd").format(estimatePicker.getValue())
         );
         estimatePicker.setOnAction(event -> estimatePicker.getEditor().setText(
-                DateTimeFormatter.ofPattern("dd/MM/yyyy").format(estimatePicker.getValue())
+                DateTimeFormatter.ofPattern("yyyy-MM-dd").format(estimatePicker.getValue())
         ));
     }
 
@@ -127,26 +117,14 @@ public class ProjectViewController {
     }
 
     private void createProject() {
-        MyDate deadline = new MyDate(
-                deadlinePicker.getValue().getDayOfMonth(),
-                deadlinePicker.getValue().getMonthValue(),
-                deadlinePicker.getValue().getYear()
-        );
-
-        MyDate estimate = new MyDate(
-                estimatePicker.getValue().getDayOfMonth(),
-                estimatePicker.getValue().getMonthValue(),
-                estimatePicker.getValue().getYear()
-        );
-
         // Add button was pressed
         if (model.isAdding()) {
             model.addProject(
                     new Project(
                             nameField.getText(),
                             statusBox.getSelectionModel().getSelectedItem(),
-                            deadline,
-                            estimate,
+                            deadlinePicker.getValue(),
+                            estimatePicker.getValue(),
                             new Team()
                     ));
         }
@@ -154,8 +132,8 @@ public class ProjectViewController {
         else {
             model.getFocusProject().setName(nameField.getText());
             model.getFocusProject().setStatus(statusBox.getSelectionModel().getSelectedItem());
-            model.getFocusProject().setDeadline(deadline);
-            model.getFocusProject().setEstimate(estimate);
+            model.getFocusProject().setDeadline(deadlinePicker.getValue());
+            model.getFocusProject().setEstimate(estimatePicker.getValue());
         }
     }
 

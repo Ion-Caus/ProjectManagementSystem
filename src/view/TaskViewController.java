@@ -5,7 +5,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.Region;
 
-import model.MyDate;
 import model.PMSModel;
 import model.Task;
 import org.controlsfx.control.textfield.TextFields;
@@ -79,20 +78,10 @@ public class TaskViewController {
             statusBox.getSelectionModel().select(model.getFocusTask().getStatus());
 
             // Deadline Picker
-            deadlinePicker.setValue(
-                    LocalDate.of(
-                            model.getFocusTask().getDeadline().getYear(),
-                            model.getFocusTask().getDeadline().getMonth(),
-                            model.getFocusTask().getDeadline().getDay()
-                    ));
+            deadlinePicker.setValue(model.getFocusTask().getDeadline());
 
             // Estimate Picker
-            estimatePicker.setValue(
-                    LocalDate.of(
-                            model.getFocusTask().getEstimate().getYear(),
-                            model.getFocusTask().getEstimate().getMonth(),
-                            model.getFocusTask().getEstimate().getDay()
-                    ));
+            estimatePicker.setValue(model.getFocusTask().getEstimate());
 
             idField.setText(model.getFocusTask().getId());
             hoursWorkedField.setText(Integer.toString(model.getFocusTask().getTimeSpent()));
@@ -102,19 +91,19 @@ public class TaskViewController {
         //add Responsible Team Member from Team List
         TextFields.bindAutoCompletion(responsibleTeamMemberInputField, model.getFocusProject().getTeam().getTeamMemberNameList());
 
-        //formatting the Deadline DatePicker from MM/dd/yyyy to dd/MM/yyyy
+        //formatting the Deadline DatePicker from MM/dd/yyyy to yyyy-MM-dd
         deadlinePicker.getEditor().setText(
-                DateTimeFormatter.ofPattern("dd/MM/yyyy").format(deadlinePicker.getValue())
+                DateTimeFormatter.ofPattern("yyyy-MM-dd").format(deadlinePicker.getValue())
         );
         deadlinePicker.setOnAction(event -> deadlinePicker.getEditor().setText(
-                DateTimeFormatter.ofPattern("dd/MM/yyyy").format(deadlinePicker.getValue())
+                DateTimeFormatter.ofPattern("yyyy-MM-dd").format(deadlinePicker.getValue())
         ));
-        //formatting the Estimate DatePicker from MM/dd/yyyy to dd/MM/yyyy
+        //formatting the Estimate DatePicker from MM/dd/yyyy to yyyy-MM-dd
         estimatePicker.getEditor().setText(
-                DateTimeFormatter.ofPattern("dd/MM/yyyy").format(estimatePicker.getValue())
+                DateTimeFormatter.ofPattern("yyyy-MM-dd").format(estimatePicker.getValue())
         );
         estimatePicker.setOnAction(event -> estimatePicker.getEditor().setText(
-                DateTimeFormatter.ofPattern("dd/MM/yyyy").format(estimatePicker.getValue())
+                DateTimeFormatter.ofPattern("yyyy-MM-dd").format(estimatePicker.getValue())
         ));
     }
 
@@ -125,18 +114,6 @@ public class TaskViewController {
     @FXML
     private void submitButtonPressed() {
         try {
-            MyDate deadline = new MyDate(
-                    deadlinePicker.getValue().getDayOfMonth(),
-                    deadlinePicker.getValue().getMonthValue(),
-                    deadlinePicker.getValue().getYear()
-            );
-
-            MyDate estimate = new MyDate(
-                    estimatePicker.getValue().getDayOfMonth(),
-                    estimatePicker.getValue().getMonthValue(),
-                    estimatePicker.getValue().getYear()
-            );
-
             // Add button was pressed
             if (model.isAdding()) {
                 if (titleField.getText().isEmpty()) {
@@ -147,8 +124,8 @@ public class TaskViewController {
                         titleField.getText(),
                         statusBox.getSelectionModel().getSelectedItem(),
                         descriptionArea.getText(),
-                        deadline,
-                        estimate,
+                        deadlinePicker.getValue(),
+                        estimatePicker.getValue(),
                         model.getTeamMember(responsibleTeamMemberInputField.getText())
                 ));
             }
@@ -157,8 +134,8 @@ public class TaskViewController {
                 model.getFocusTask().setTitle(titleField.getText());
                 model.getFocusTask().setDescription(descriptionArea.getText());
                 model.getFocusTask().setStatus(statusBox.getSelectionModel().getSelectedItem());
-                model.getFocusTask().setDeadline(deadline);
-                model.getFocusTask().setEstimate(estimate);
+                model.getFocusTask().setDeadline(deadlinePicker.getValue());
+                model.getFocusTask().setEstimate(estimatePicker.getValue());
                 model.getFocusTask().setResponsibleTeamMember(model.getTeamMember(responsibleTeamMemberInputField.getText()));
             }
             viewHandler.openView("TaskListView");

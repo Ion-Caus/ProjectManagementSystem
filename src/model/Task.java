@@ -1,5 +1,6 @@
 package model;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Random;
 
@@ -8,8 +9,8 @@ public class Task {
     private String title;
     private String status;
     private String description;
-    private MyDate deadline;
-    private MyDate estimate;
+    private LocalDate deadline;
+    private LocalDate estimate;
     private int timeSpent;
 
     private TeamMember responsibleTeamMember;
@@ -18,7 +19,7 @@ public class Task {
     public static final String STATUS_IN_PROCESS = "In Process";
     public static final String STATUS_COMPLETED = "Completed";
 
-    public Task(String title, String status, String description, MyDate deadline, MyDate estimate, TeamMember responsibleTeamMember) {
+    public Task(String title, String status, String description, LocalDate deadline, LocalDate estimate, TeamMember responsibleTeamMember) {
         this.id = createTaskID();
 
         setTitle(title);
@@ -66,26 +67,26 @@ public class Task {
         this.description = (description == null) ? "" : description;
     }
 
-    public MyDate getDeadline() {
-        return deadline.copy();
+    public LocalDate getDeadline() {
+        return deadline;
     }
 
-    public void setDeadline(MyDate deadline) {
+    public void setDeadline(LocalDate deadline) {
         if (deadline == null) {
             throw new IllegalArgumentException("Null deadline given");
         }
-        this.deadline = deadline.copy();
+        this.deadline = deadline;
     }
 
-    public MyDate getEstimate() {
-        return estimate.copy();
+    public LocalDate getEstimate() {
+        return estimate;
     }
 
-    public void setEstimate(MyDate estimate) {
+    public void setEstimate(LocalDate estimate) {
         if (estimate == null) {
             throw new IllegalArgumentException("Null estimate given");
         }
-        this.estimate = estimate.copy();
+        this.estimate = estimate;
     }
 
     public TeamMember getResponsibleTeamMember() {
@@ -124,8 +125,8 @@ public class Task {
                 ", title='" + title + '\'' +
                 ", status='" + status + '\'' +
                 ", description='" + description + '\'' +
-                ", deadline=" + deadline +
-                ", estimate=" + estimate +
+                ", deadline=" + deadline.toString() +
+                ", estimate=" + estimate.toString() +
                 ", responsibleTeamMember=" + responsibleTeamMember.getName() +
                 ", timeSpent=" + timeSpent +
                 '}';

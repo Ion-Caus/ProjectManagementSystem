@@ -1,5 +1,6 @@
 package model;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Random;
 
@@ -7,8 +8,8 @@ public class Project {
     private String id;
     private String name;
     private String status;
-    private MyDate deadline;
-    private MyDate estimate;
+    private LocalDate deadline;
+    private LocalDate estimate;
     private int timeSpent;
 
     private RequirementList requirementList;
@@ -20,7 +21,7 @@ public class Project {
     public static final String STATUS_WAITING_FOR_APPROVAL = "Waiting for approval";
     public static final String STATUS_FINISHED = "Finished";
 
-    public Project(String name,String status, MyDate deadline, MyDate estimate, Team team) {
+    public Project(String name,String status, LocalDate deadline, LocalDate estimate, Team team) {
         this.id = createProjectID();
 
         setName(name);
@@ -64,26 +65,26 @@ public class Project {
     }
 
 
-    public MyDate getDeadline() {
-        return deadline.copy();
+    public LocalDate getDeadline() {
+        return deadline;
     }
 
-    public void setDeadline(MyDate deadline) {
+    public void setDeadline(LocalDate deadline) {
         if (deadline == null) {
             throw new IllegalArgumentException("Null deadline given");
         }
-        this.deadline = deadline.copy();
+        this.deadline = deadline;
     }
 
-    public MyDate getEstimate() {
-        return this.estimate.copy();
+    public LocalDate getEstimate() {
+        return this.estimate;
     }
 
-    public void setEstimate(MyDate estimate) {
+    public void setEstimate(LocalDate estimate) {
         if (estimate == null) {
             throw new IllegalArgumentException("Null estimate given");
         }
-        this.estimate = estimate.copy();
+        this.estimate = estimate;
     }
 
     public Team getTeam() {
@@ -124,8 +125,8 @@ public class Project {
                 "name='" + name + '\'' +
                 ", id=" + id +
                 ", status='" + status + '\'' +
-                ", deadline=" + deadline +
-                ", estimate=" + estimate +
+                ", deadline=" + deadline.toString() +
+                ", estimate=" + estimate.toString() +
                 ", timeSpent=" + timeSpent +
                 ", requirementList=" + requirementList +
                 ", team=" + team.getTeamMemberNameList() +

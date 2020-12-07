@@ -1,5 +1,6 @@
 package model;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Random;
 
@@ -9,8 +10,8 @@ public class Requirement {
     private String status;
     private String type;
     private String description;
-    private MyDate deadline;
-    private MyDate estimate;
+    private LocalDate deadline;
+    private LocalDate estimate;
     private int timeSpent;
 
     private TaskList taskList;
@@ -27,7 +28,7 @@ public class Requirement {
     public static final String TYPE_PROJECT_RELATED = "Project Related";
 
 
-    public Requirement(String title, String status, String type, String description, MyDate deadline, MyDate estimate, TeamMember responsibleTeamMember) {
+    public Requirement(String title, String status, String type, String description, LocalDate deadline, LocalDate estimate, TeamMember responsibleTeamMember) {
         this.id = createReqID();
 
         setTitle(title);
@@ -91,26 +92,26 @@ public class Requirement {
         return taskList;
     }
 
-    public MyDate getDeadline() {
-        return deadline.copy();
+    public LocalDate getDeadline() {
+        return deadline;
     }
 
-    public void setDeadline(MyDate deadline) {
+    public void setDeadline(LocalDate deadline) {
         if (deadline == null) {
             throw new IllegalArgumentException("Null deadline given");
         }
-        this.deadline = deadline.copy();
+        this.deadline = deadline;
     }
 
-    public MyDate getEstimate() {
-        return estimate.copy();
+    public LocalDate getEstimate() {
+        return estimate;
     }
 
-    public void setEstimate(MyDate estimate) {
+    public void setEstimate(LocalDate estimate) {
         if (estimate == null) {
             throw new IllegalArgumentException("Null estimate given");
         }
-        this.estimate = estimate.copy();
+        this.estimate = estimate;
     }
 
     public TeamMember getResponsibleTeamMember() {
@@ -155,8 +156,8 @@ public class Requirement {
                 ", status='" + status + '\'' +
                 ", type='" + type + '\'' +
                 ", description='" + description + '\'' +
-                ", deadline=" + deadline +
-                ", estimate=" + estimate +
+                ", deadline=" + deadline.toString() +
+                ", estimate=" + estimate.toString() +
                 ", responsibleTeamMember=" + responsibleTeamMember.getName() +
                 ", timeSpent=" + timeSpent +
                 ", taskList=" + taskList +
