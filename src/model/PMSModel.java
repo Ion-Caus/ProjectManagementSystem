@@ -23,6 +23,8 @@ public interface PMSModel {
     TeamMember getTeamMember(String name);
     TeamMember getTeamMember(int index);
 
+    ArrayList<String> getTeamMemberNameList();
+
     //----Project----
     int projectListSize();
 

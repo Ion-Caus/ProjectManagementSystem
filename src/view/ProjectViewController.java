@@ -169,13 +169,16 @@ public class ProjectViewController {
     @FXML
     private void addTeamMemberButton() {
         try {
-            createProject();
-            // setting the last created project to focus
-            model.setFocusProject(model.getProjectList().get(model.projectListSize()-1));
-            model.setAdding(false);
+            // set the focus to the last one (just created)
+            if (model.isAdding()) {
+                createProject();
+                model.setFocusProject(model.getProjectList().get(model.projectListSize() - 1));
+                model.setAdding(false);
+            }
             viewHandler.openView("CreateTeamView");
         }
         catch (Exception e) {
+            e.printStackTrace();
             errorLabel.setText("Please enter the name of project first");
         }
     }

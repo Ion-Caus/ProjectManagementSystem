@@ -12,6 +12,9 @@ public class Requirement {
     private String description;
     private LocalDate deadline;
     private LocalDate estimate;
+
+    //TODO complete time and time container
+    private Time time;
     private int timeSpent;
 
     private TaskList taskList;
@@ -38,6 +41,8 @@ public class Requirement {
         setDeadline(deadline);
         setEstimate(estimate);
         setResponsibleTeamMember(responsibleTeamMember);
+
+        //TODO how to initialize Time
         this.timeSpent = 0;
 
         this.taskList = new TaskList();

@@ -161,8 +161,14 @@ public class ProjectListViewController {
         Optional<String> result = dialog.showAndWait();
 
         if (result.isPresent()) {
-            model.addEmployee(new TeamMember(result.get()));
-            viewModelEmployee.update();
+            // check if the employee is not already in the list
+            if (model.getEmployeeNameList().contains(result.get().strip())) {
+                errorLabelEmployee.setText("Employee is already in the list.");
+            }
+            else {
+                model.addEmployee(new TeamMember(result.get().strip()));
+                viewModelEmployee.update();
+            }
         }
     }
 

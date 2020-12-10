@@ -89,7 +89,7 @@ public class TaskViewController {
         errorLabel.setText("");
 
         //add Responsible Team Member from Team List
-        TextFields.bindAutoCompletion(responsibleTeamMemberInputField, model.getFocusProject().getTeam().getTeamMemberNameList());
+        TextFields.bindAutoCompletion(responsibleTeamMemberInputField, model.getTeamMemberNameList());
 
         //formatting the Deadline DatePicker from MM/dd/yyyy to yyyy-MM-dd
         deadlinePicker.getEditor().setText(
@@ -126,7 +126,7 @@ public class TaskViewController {
                         descriptionArea.getText(),
                         deadlinePicker.getValue(),
                         estimatePicker.getValue(),
-                        model.getTeamMember(responsibleTeamMemberInputField.getText())
+                        model.getTeamMember(responsibleTeamMemberInputField.getText().strip())
                 ));
             }
             // View button was pressed
@@ -136,7 +136,7 @@ public class TaskViewController {
                 model.getFocusTask().setStatus(statusBox.getSelectionModel().getSelectedItem());
                 model.getFocusTask().setDeadline(deadlinePicker.getValue());
                 model.getFocusTask().setEstimate(estimatePicker.getValue());
-                model.getFocusTask().setResponsibleTeamMember(model.getTeamMember(responsibleTeamMemberInputField.getText()));
+                model.getFocusTask().setResponsibleTeamMember(model.getTeamMember(responsibleTeamMemberInputField.getText().strip()));
             }
             viewHandler.openView("TaskListView");
         }
@@ -153,9 +153,6 @@ public class TaskViewController {
     @FXML
     private void onEnter(ActionEvent event) {
         if (event.getSource() == titleField) {
-            responsibleTeamMemberInputField.requestFocus();
-        }
-        else if (event.getSource() == responsibleTeamMemberInputField) {
             submitButtonPressed();
         }
     }

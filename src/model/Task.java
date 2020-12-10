@@ -11,6 +11,9 @@ public class Task {
     private String description;
     private LocalDate deadline;
     private LocalDate estimate;
+
+    //TODO complete time and time container
+    private TimeContainer timeWorkedList;
     private int timeSpent;
 
     private TeamMember responsibleTeamMember;
@@ -29,8 +32,8 @@ public class Task {
         setEstimate(estimate);
         setResponsibleTeamMember(responsibleTeamMember);
 
+        this.timeWorkedList = new TimeContainer();
         this.timeSpent = 0;
-
     }
 
     public String getId() {
@@ -104,8 +107,8 @@ public class Task {
         return timeSpent;
     }
 
-    public void setTimeSpent(int timeSpent) {
-        this.timeSpent = timeSpent;
+    public void setTimeSpent() {
+        this.timeSpent = timeWorkedList.getTotalTimeWorked();
     }
 
     private static String createTaskID() {
@@ -129,6 +132,7 @@ public class Task {
                 ", estimate=" + estimate.toString() +
                 ", responsibleTeamMember=" + responsibleTeamMember.getName() +
                 ", timeSpent=" + timeSpent +
+                ", timeWorkedList= " +timeWorkedList +
                 '}';
     }
 }

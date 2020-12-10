@@ -113,7 +113,7 @@ public class RequirementViewController {
         errorLabel.setText("");
 
         //add Responsible Team Member from Team List
-        TextFields.bindAutoCompletion(responsibleTeamMemberInputField, model.getFocusProject().getTeam().getTeamMemberNameList());
+        TextFields.bindAutoCompletion(responsibleTeamMemberInputField, model.getTeamMemberNameList());
 
         //formatting the Deadline DatePicker from MM/dd/yyyy to yyyy-MM-dd
         deadlinePicker.getEditor().setText(
@@ -157,7 +157,7 @@ public class RequirementViewController {
                         descriptionArea.getText(),
                         deadlinePicker.getValue(),
                         estimatePicker.getValue(),
-                        model.getTeamMember(responsibleTeamMemberInputField.getText())
+                        model.getTeamMember(responsibleTeamMemberInputField.getText().strip())
                 ));
             }
             // View button was pressed
@@ -168,7 +168,7 @@ public class RequirementViewController {
                 model.getFocusRequirement().setType(typeBox.getSelectionModel().getSelectedItem());
                 model.getFocusRequirement().setDeadline(deadlinePicker.getValue());
                 model.getFocusRequirement().setEstimate(estimatePicker.getValue());
-                model.getFocusRequirement().setResponsibleTeamMember(model.getTeamMember(responsibleTeamMemberInputField.getText()));
+                model.getFocusRequirement().setResponsibleTeamMember(model.getTeamMember(responsibleTeamMemberInputField.getText().strip()));
             }
             viewHandler.openView("RequirementListView");
         }
@@ -184,9 +184,6 @@ public class RequirementViewController {
     @FXML
     private void onEnter(ActionEvent event) {
         if (event.getSource() == titleField) {
-            responsibleTeamMemberInputField.requestFocus();
-        }
-        else if (event.getSource() == responsibleTeamMemberInputField) {
             submitButtonPressed();
         }
     }

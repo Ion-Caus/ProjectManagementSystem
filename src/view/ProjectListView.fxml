@@ -91,8 +91,7 @@
                               </VBox>
                               <TableView fx:id="employeeListTable" prefHeight="372.0" prefWidth="450.0">
                                  <columns>
-                                    <TableColumn fx:id="nameEmployeeColumn" prefWidth="168.0" text="Name" />
-                                    <TableColumn fx:id="roleEmployeeColumn" minWidth="0.0" prefWidth="187.0" text="Role" />
+                                    <TableColumn fx:id="nameEmployeeColumn" prefWidth="400.0" text="Name" />
                                  </columns>
                               </TableView>
                            </children>
