@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Arrays;
+
 public class TeamMember {
     private String name;
     private String role;
@@ -35,10 +37,15 @@ public class TeamMember {
     }
 
     public void setRole(String role) {
-        if (role == null || role.isEmpty()) {
-            throw new IllegalArgumentException("Role can not be empty");
+        if (role == null || !validRole(role)) {
+            throw new IllegalArgumentException("Invalid role");
         }
         this.role = role;
+    }
+
+    private static boolean validRole(String role) {
+        String[] roles = {TEAM_MEMBER, SCRUM_MASTER, PRODUCT_OWNER};
+        return Arrays.asList(roles).contains(role);
     }
 
     @Override

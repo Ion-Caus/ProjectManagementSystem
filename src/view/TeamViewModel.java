@@ -5,8 +5,6 @@ import javafx.collections.*;
 import model.PMSModel;
 import model.TeamMember;
 
-import java.util.ArrayList;
-
 public class TeamViewModel {
     private ObservableList<TeamMemberViewModel> teamList;
     private PMSModel model;

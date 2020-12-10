@@ -39,8 +39,8 @@ public class CreateTeamViewController {
         this.viewModel = new TeamViewModel(model);
 
         // --- Team List Table ---
-        nameColumn.setCellValueFactory(cellDate -> cellDate.getValue().getNameProperty());
-        roleColumn.setCellValueFactory(cellDate -> cellDate.getValue().getRoleProperty());
+        nameColumn.setCellValueFactory(cellData -> cellData.getValue().getNameProperty());
+        roleColumn.setCellValueFactory(cellData -> cellData.getValue().getRoleProperty());
         teamMembersTable.setItems(viewModel.getTeamList());
 
         reset();
@@ -73,9 +73,9 @@ public class CreateTeamViewController {
                 throw new IllegalArgumentException("Team Member is already in the team");
             }
 
-            TeamMember memberMember = model.getEmployee(teamMembersInputField.getText().strip()).copy();
-            memberMember.setRole(roleComboBox.getValue());
-            model.getFocusProject().getTeam().addTeamMember(memberMember);
+            TeamMember teamMember = model.getEmployee(teamMembersInputField.getText().strip()).copy();
+            teamMember.setRole(roleComboBox.getValue());
+            model.getFocusProject().getTeam().addTeamMember(teamMember);
 
             reset();
         }
@@ -98,7 +98,6 @@ public class CreateTeamViewController {
             reset();
         }
         catch (Exception e) {
-            e.printStackTrace();
             errorLabel.setText("Please select an item");
         }
     }

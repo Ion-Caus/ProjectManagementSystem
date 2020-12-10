@@ -1,28 +1,31 @@
 package model;
 
 public class Time {
-    private int hour;
     private int minute;
 
     private TeamMember teamMember;
 
-    public Time(int hour, int minute){
-        setTime(hour, minute);
+    public Time(int minutes, TeamMember teamMember){
+        setTime(minutes);
+        setTeamMember(teamMember);
     }
 
-    public void setTime(int hour, int minute){
-        if (hour < 0) {
-            throw new IllegalArgumentException("Hour can not be negative.");
+    public void setTeamMember(TeamMember teamMember) {
+        if (teamMember == null) {
+            throw new IllegalArgumentException("Null teamMember object given.");
         }
-        this.hour = hour;
-        if (minute < 0) {
+        this.teamMember = teamMember;
+    }
+
+    public void setTime(int minutes){
+        if (minutes < 0) {
             throw new IllegalArgumentException("Minutes can not be negative.");
         }
-        this.minute = minute;
+        this.minute = minutes;
     }
 
-    public int getHour() {
-        return hour;
+    public void addTime(int minute) {
+        this.minute += minute;
     }
 
     public int getMinute() {
@@ -33,7 +36,25 @@ public class Time {
         return teamMember;
     }
 
-    public int getTimeWorked(){
-        return this.hour*60 + this.minute;
+    public String getTimeWorked(){
+        int days = this.minute / 24 / 60;
+        int hours = this.minute / 60 % 24;
+        int minutes = this.minute % 60;
+
+        String timeString = "";
+
+        if (days != 0){
+            timeString += days + "d ";
+        }
+
+        if (hours != 0){
+            timeString += hours + "h ";
+        }
+
+        if (minutes != 0) {
+            timeString += minutes + "m";
+        }
+
+        return timeString;
     }
 }

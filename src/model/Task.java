@@ -14,7 +14,6 @@ public class Task {
 
     //TODO complete time and time container
     private TimeContainer timeWorkedList;
-    private int timeSpent;
 
     private TeamMember responsibleTeamMember;
 
@@ -33,7 +32,6 @@ public class Task {
         setResponsibleTeamMember(responsibleTeamMember);
 
         this.timeWorkedList = new TimeContainer();
-        this.timeSpent = 0;
     }
 
     public String getId() {
@@ -96,19 +94,15 @@ public class Task {
         return responsibleTeamMember;
     }
 
+    public TimeContainer getTimeWorkedList() {
+        return timeWorkedList;
+    }
+
     public void setResponsibleTeamMember(TeamMember responsibleTeamMember) {
         if (responsibleTeamMember == null) {
             throw new IllegalArgumentException("Null responsible team member given");
         }
         this.responsibleTeamMember = responsibleTeamMember;
-    }
-
-    public int getTimeSpent() {
-        return timeSpent;
-    }
-
-    public void setTimeSpent() {
-        this.timeSpent = timeWorkedList.getTotalTimeWorked();
     }
 
     private static String createTaskID() {
@@ -131,7 +125,6 @@ public class Task {
                 ", deadline=" + deadline.toString() +
                 ", estimate=" + estimate.toString() +
                 ", responsibleTeamMember=" + responsibleTeamMember.getName() +
-                ", timeSpent=" + timeSpent +
                 ", timeWorkedList= " +timeWorkedList +
                 '}';
     }

@@ -119,6 +119,9 @@ public class ProjectViewController {
     private void createProject() {
         // Add button was pressed
         if (model.isAdding()) {
+            if (nameField.getText().isEmpty()) {
+                    throw new IllegalArgumentException("Please enter the title of requirement first.");
+            }
             model.addProject(
                     new Project(
                             nameField.getText(),
@@ -178,8 +181,7 @@ public class ProjectViewController {
             viewHandler.openView("CreateTeamView");
         }
         catch (Exception e) {
-            e.printStackTrace();
-            errorLabel.setText("Please enter the name of project first");
+            errorLabel.setText(e.getMessage());
         }
     }
 }

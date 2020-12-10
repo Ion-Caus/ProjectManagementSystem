@@ -153,22 +153,26 @@ public class ProjectListViewController {
     @FXML
     private void addMemberButton() {
         errorLabelEmployee.setText("");
+        try {
+            TextInputDialog dialog = new TextInputDialog();
+            dialog.setTitle("Employee");
+            dialog.setHeaderText("What is the name of employee");
 
-        TextInputDialog dialog = new TextInputDialog();
-        dialog.setTitle("Employee");
-        dialog.setHeaderText("What is the name of employee");
+            Optional<String> result = dialog.showAndWait();
 
-        Optional<String> result = dialog.showAndWait();
-
-        if (result.isPresent()) {
-            // check if the employee is not already in the list
-            if (model.getEmployeeNameList().contains(result.get().strip())) {
-                errorLabelEmployee.setText("Employee is already in the list.");
+            if (result.isPresent()) {
+                // check if the employee is not already in the list
+                if (model.getEmployeeNameList().contains(result.get().strip())) {
+                    errorLabelEmployee.setText("Employee is already in the list.");
+                }
+                else {
+                    model.addEmployee(new TeamMember(result.get().strip()));
+                    viewModelEmployee.update();
+                }
             }
-            else {
-                model.addEmployee(new TeamMember(result.get().strip()));
-                viewModelEmployee.update();
-            }
+        }
+        catch (IllegalArgumentException e) {
+            errorLabelEmployee.setText(e.getMessage());
         }
     }
 
