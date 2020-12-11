@@ -13,7 +13,6 @@ public class Task implements Serializable {
     private LocalDate deadline;
     private LocalDate estimate;
 
-    //TODO complete time and time container
     private TimeContainer timeWorkedList;
 
     private TeamMember responsibleTeamMember;

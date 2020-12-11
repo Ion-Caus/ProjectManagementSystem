@@ -14,8 +14,6 @@ public class Requirement implements Serializable {
     private LocalDate deadline;
     private LocalDate estimate;
 
-    //TODO complete time and time container
-    private Time time;
     private int timeSpent;
 
     private TaskList taskList;
@@ -42,8 +40,6 @@ public class Requirement implements Serializable {
         setDeadline(deadline);
         setEstimate(estimate);
         setResponsibleTeamMember(responsibleTeamMember);
-
-        //TODO how to initialize Time
         this.timeSpent = 0;
 
         this.taskList = new TaskList();
@@ -135,8 +131,12 @@ public class Requirement implements Serializable {
         return timeSpent;
     }
 
-    public void setTimeSpent(int timeSpent) {
-        this.timeSpent = timeSpent;
+    public void updateTimeSpent() {
+        int minutes = 0;
+        for (int i = 0; i < taskList.size(); i++) {
+            minutes += taskList.getTask(i).getTimeWorkedList().getTotalTimeWorked();
+        }
+        this.timeSpent = minutes;
     }
 
     private static String createReqID() {

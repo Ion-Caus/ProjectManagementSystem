@@ -83,7 +83,11 @@ public class ProjectViewController {
             // Estimate Picker
             estimatePicker.setValue(model.getFocusProject().getEstimate());
 
+            // show id
             idField.setText(model.getFocusProject().getId());
+
+            // update and show time spent
+            model.getFocusProject().updateTimeSpent();
             hoursWorkedField.setText(Integer.toString(model.getFocusProject().getTimeSpent()));
 
             // Open Requirement List Button

@@ -13,19 +13,14 @@ public class FileSaver {
         out.close();
     }
 
-    public static Team fromBinaryEmployeeList(String fileName) throws IOException {
+    public static Team fromBinaryEmployeeList(String fileName) throws IOException, ClassNotFoundException {
         String path = "data/" + fileName + ".bin";
 
         File file = new File(path);
         ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
 
-        Team employeeList = null;
-        try {
-            employeeList = (Team) in.readObject();
-        }
-        catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+        Team employeeList = (Team) in.readObject();
+        in.close();
 
         return employeeList;
     }
@@ -36,7 +31,10 @@ public class FileSaver {
         File file = new File(path);
         ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
 
-        return (ProjectList) in.readObject();
+        ProjectList projectList = (ProjectList) in.readObject();
+        in.close();
+
+        return projectList;
     }
 }
 

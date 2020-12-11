@@ -14,7 +14,6 @@ public class Project implements Serializable {
     private int timeSpent;
 
     private RequirementList requirementList;
-    //TODO private Team team;
     private Team team;
 
     public static final String STATUS_CREATED = "Created";
@@ -103,8 +102,12 @@ public class Project implements Serializable {
         return timeSpent;
     }
 
-    public void setTimeSpent(int timeSpent) {
-        this.timeSpent = timeSpent;
+    public void updateTimeSpent() {
+        int minutes = 0;
+        for (int i = 0; i < requirementList.size(); i++) {
+            minutes += requirementList.getRequirement(i).getTimeSpent();
+        }
+        this.timeSpent = minutes;
     }
 
     //TODO public ProductOwner getProductOwner(){}

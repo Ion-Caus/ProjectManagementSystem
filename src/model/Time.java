@@ -4,7 +4,6 @@ import java.io.Serializable;
 
 public class Time implements Serializable {
     private int minute;
-
     private TeamMember teamMember;
 
     public Time(int minutes, TeamMember teamMember){
@@ -26,8 +25,11 @@ public class Time implements Serializable {
         this.minute = minutes;
     }
 
-    public void addTime(int minute) {
-        this.minute += minute;
+    public void addTime(int minutes) {
+        if (minutes < 0) {
+            throw new IllegalArgumentException("Minutes can not be negative.");
+        }
+        this.minute += minutes;
     }
 
     public int getMinute() {
