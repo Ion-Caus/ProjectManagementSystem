@@ -72,6 +72,9 @@ public class ViewHandler {
         primaryStage.setScene(currentScene);
         primaryStage.setWidth(root.getPrefWidth());
         primaryStage.setHeight(root.getPrefHeight());
+
+        //saveDataOnClosing
+        primaryStage.setOnCloseRequest(windowEvent -> model.saveData());
         primaryStage.show();
     }
 

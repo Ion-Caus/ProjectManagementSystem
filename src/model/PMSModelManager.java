@@ -1,5 +1,6 @@
 package model;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class PMSModelManager implements PMSModel {
@@ -16,6 +17,9 @@ public class PMSModelManager implements PMSModel {
         this.projectList = new ProjectList();
         this.employeeList = new Team();
         this.adding = false;
+
+        //loading data
+        loadData();
     }
 
     //-------for adding or viewing---------
@@ -224,5 +228,29 @@ public class PMSModelManager implements PMSModel {
     @Override
     public Task getFocusTask() {
         return focusTask;
+    }
+
+
+    //-------FileSaver-------
+    @Override
+    public void saveData() {
+        try {
+            FileSaver.toBinary("EmployeeList", this.employeeList);
+            FileSaver.toBinary("ProjectList", this.projectList);
+        }
+        catch (IOException e) {
+            System.out.println("Data cannot be saved.");
+        }
+    }
+
+    @Override
+    public void loadData() {
+        try {
+            this.employeeList = FileSaver.fromBinaryEmployeeList("EmployeeList");
+            this.projectList = FileSaver.fromBinaryProjectList("ProjectList");
+        }
+        catch (IOException | ClassNotFoundException e) {
+            System.out.println("Data cannot be load.\n" + e.getMessage());
+        }
     }
 }

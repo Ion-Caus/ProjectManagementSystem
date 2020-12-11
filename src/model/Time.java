@@ -1,6 +1,8 @@
 package model;
 
-public class Time {
+import java.io.Serializable;
+
+public class Time implements Serializable {
     private int minute;
 
     private TeamMember teamMember;

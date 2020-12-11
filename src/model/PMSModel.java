@@ -66,4 +66,8 @@ public interface PMSModel {
 
     void setFocusTask(Task task);
     Task getFocusTask();
+
+    //----FileSaver----
+    void saveData();
+    void loadData();
 }

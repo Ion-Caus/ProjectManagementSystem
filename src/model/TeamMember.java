@@ -1,8 +1,9 @@
 package model;
 
+import java.io.Serializable;
 import java.util.Arrays;
 
-public class TeamMember {
+public class TeamMember implements Serializable {
     private String name;
     private String role;
 

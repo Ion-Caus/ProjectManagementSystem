@@ -1,8 +1,9 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Team {
+public class Team implements Serializable {
     private ArrayList<TeamMember> teamMemberList;
     //TODO add Scrum master and Product owner, just one dont forget to check
     //private ScrumMaster scrumMaster;

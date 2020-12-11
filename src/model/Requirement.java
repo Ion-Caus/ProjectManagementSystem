@@ -1,10 +1,11 @@
 package model;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Random;
 
-public class Requirement {
+public class Requirement implements Serializable {
     private String id;
     private String title;
     private String status;
