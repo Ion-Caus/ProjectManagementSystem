@@ -55,6 +55,7 @@ public class ProjectListViewController {
         projectListTable.setItems(viewModelProject.getProjectList());
 
         errorLabelProject.setText("");
+        viewModelProject.update();
         //---------------------
 
 
@@ -64,6 +65,7 @@ public class ProjectListViewController {
         employeeListTable.setItems(viewModelEmployee.getEmployeeList());
 
         errorLabelEmployee.setText("");
+        viewModelEmployee.update();
         //-----------------------
     }
 

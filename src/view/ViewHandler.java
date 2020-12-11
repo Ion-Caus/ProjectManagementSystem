@@ -1,6 +1,5 @@
 package view;
 
-import javafx.beans.property.StringProperty;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.Region;
@@ -72,6 +71,9 @@ public class ViewHandler {
         primaryStage.setScene(currentScene);
         primaryStage.setWidth(root.getPrefWidth());
         primaryStage.setHeight(root.getPrefHeight());
+
+        //saveDataOnClosing
+        primaryStage.setOnCloseRequest(windowEvent -> model.saveData());
         primaryStage.show();
     }
 

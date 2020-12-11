@@ -1,10 +1,11 @@
 package model;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Random;
 
-public class Task {
+public class Task implements Serializable {
     private String id;
     private String title;
     private String status;
@@ -12,7 +13,6 @@ public class Task {
     private LocalDate deadline;
     private LocalDate estimate;
 
-    //TODO complete time and time container
     private TimeContainer timeWorkedList;
 
     private TeamMember responsibleTeamMember;

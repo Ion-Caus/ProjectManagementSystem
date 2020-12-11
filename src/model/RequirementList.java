@@ -1,8 +1,9 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class RequirementList {
+public class RequirementList implements Serializable {
     private ArrayList<Requirement> requirementList;
 
     public RequirementList() {

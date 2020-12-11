@@ -104,7 +104,11 @@ public class RequirementViewController {
             // responsible Team Member
             responsibleTeamMemberInputField.setText(model.getFocusRequirement().getResponsibleTeamMember().getName());
 
+            // show id
             idField.setText(model.getFocusRequirement().getId());
+
+            // update and show time spent
+            model.getFocusRequirement().updateTimeSpent();
             hoursWorkedField.setText(Integer.toString(model.getFocusRequirement().getTimeSpent()));
 
             // Open Task List Button

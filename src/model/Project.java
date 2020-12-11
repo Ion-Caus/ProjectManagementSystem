@@ -1,10 +1,11 @@
 package model;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Random;
 
-public class Project {
+public class Project implements Serializable {
     private String id;
     private String name;
     private String status;
@@ -13,7 +14,6 @@ public class Project {
     private int timeSpent;
 
     private RequirementList requirementList;
-    //TODO private Team team;
     private Team team;
 
     public static final String STATUS_CREATED = "Created";
@@ -102,8 +102,12 @@ public class Project {
         return timeSpent;
     }
 
-    public void setTimeSpent(int timeSpent) {
-        this.timeSpent = timeSpent;
+    public void updateTimeSpent() {
+        int minutes = 0;
+        for (int i = 0; i < requirementList.size(); i++) {
+            minutes += requirementList.getRequirement(i).getTimeSpent();
+        }
+        this.timeSpent = minutes;
     }
 
     //TODO public ProductOwner getProductOwner(){}

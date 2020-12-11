@@ -1,11 +1,9 @@
 package model;
 
-import javafx.beans.property.StringProperty;
-
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class TimeContainer {
-
+public class TimeContainer implements Serializable {
     private ArrayList<Time> timeContainer;
 
     public TimeContainer() {
