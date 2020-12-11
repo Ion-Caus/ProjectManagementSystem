@@ -20,6 +20,7 @@ public class RequirementListViewController {
     @FXML private TableColumn<RequirementViewModel, String> estimateRequirementColumn;
     @FXML private TableColumn<RequirementViewModel, String> responsibleTeamMemberReqColumn;
     @FXML private Label errorLabel;
+    @FXML private Label pathLabel;
 
     private ViewHandler viewHandler;
     private PMSModel model;
@@ -46,11 +47,13 @@ public class RequirementListViewController {
         responsibleTeamMemberReqColumn.setCellValueFactory(cellData -> cellData.getValue().getResponsibleTeamMemberProperty());
         requirementListTable.setItems(viewModel.getRequirementList());
 
-        errorLabel.setText("");
+        reset();
     }
 
     public void reset() {
         errorLabel.setText("");
+        pathLabel.setText(model.getFocusProject().getName() + "/");
+
         viewModel.update();
     }
 

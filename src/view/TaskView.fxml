@@ -12,16 +12,25 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="405.0" prefWidth="600.0" userData="Task" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.TaskViewController">
+<VBox prefHeight="401.0" prefWidth="600.0" userData="Task" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.TaskViewController">
    <children>
-      <Label prefHeight="17.0" prefWidth="600.0" text="Task">
-         <font>
-            <Font size="24.0" />
-         </font>
-         <padding>
-            <Insets bottom="5.0" left="50.0" top="5.0" />
-         </padding>
-      </Label>
+      <HBox prefHeight="40.0" prefWidth="600.0">
+         <children>
+            <Label prefHeight="17.0" prefWidth="600.0" text="Task">
+               <font>
+                  <Font size="24.0" />
+               </font>
+               <padding>
+                  <Insets bottom="5.0" left="50.0" top="5.0" />
+               </padding>
+            </Label>
+            <Label fx:id="pathLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="865.0" text="project/requiremnt/task" textFill="#6b6b6b">
+               <padding>
+                  <Insets top="10.0" />
+               </padding>
+            </Label>
+         </children>
+      </HBox>
       <Separator prefWidth="200.0" />
       <HBox prefHeight="303.0" prefWidth="600.0">
          <children>

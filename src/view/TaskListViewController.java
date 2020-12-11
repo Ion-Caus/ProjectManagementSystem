@@ -19,6 +19,7 @@ public class TaskListViewController {
     @FXML private TableColumn<TaskViewModel, String> estimateTaskColumn;
     @FXML private TableColumn<TaskViewModel, String> responsibleTeamMemberTaskColumn;
     @FXML private Label errorLabel;
+    @FXML private Label pathLabel;
 
     private ViewHandler viewHandler;
     private PMSModel model;
@@ -44,11 +45,13 @@ public class TaskListViewController {
         responsibleTeamMemberTaskColumn.setCellValueFactory(cellData -> cellData.getValue().getResponsibleTeamMemberProperty());
         taskListTable.setItems(viewModel.getTaskList());
 
-        errorLabel.setText("");
+        reset();
     }
 
     public void reset() {
         errorLabel.setText("");
+        pathLabel.setText(model.getFocusProject().getName() + "/" + model.getFocusRequirement().getTitle() + "/");
+
         viewModel.update();
     }
 

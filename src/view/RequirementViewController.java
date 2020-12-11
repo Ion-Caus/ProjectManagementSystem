@@ -23,6 +23,7 @@ public class RequirementViewController {
     @FXML private TextField idField;
     @FXML private TextField hoursWorkedField;
     @FXML private Label errorLabel;
+    @FXML private Label pathLabel;
 
     @FXML private Button openTaskListButton;
 
@@ -115,6 +116,7 @@ public class RequirementViewController {
             openTaskListButton.setVisible(true);
         }
         errorLabel.setText("");
+        pathLabel.setText(model.getFocusProject().getName() + "/" + model.getFocusRequirement().getTitle());
 
         //add Responsible Team Member from Team List
         TextFields.bindAutoCompletion(responsibleTeamMemberInputField, model.getTeamMemberNameList());

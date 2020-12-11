@@ -21,6 +21,7 @@ public class TaskViewController {
     @FXML private TextField idField;
     @FXML private TextField hoursWorkedField;
     @FXML private Label errorLabel;
+    @FXML private Label pathLabel;
 
     @FXML private TextField responsibleTeamMemberInputField;
 
@@ -83,10 +84,14 @@ public class TaskViewController {
             // Estimate Picker
             estimatePicker.setValue(model.getFocusTask().getEstimate());
 
+            // responsible Team Member
+            responsibleTeamMemberInputField.setText(model.getFocusTask().getResponsibleTeamMember().getName());
+
             idField.setText(model.getFocusTask().getId());
             hoursWorkedField.setText(Integer.toString(model.getFocusTask().getTimeWorkedList().getTotalTimeWorked()));
         }
         errorLabel.setText("");
+        pathLabel.setText(model.getFocusProject().getName() + "/" + model.getFocusRequirement().getTitle() + "/" + model.getFocusTask().getTitle());
 
         //add Responsible Team Member from Team List
         TextFields.bindAutoCompletion(responsibleTeamMemberInputField, model.getTeamMemberNameList());
