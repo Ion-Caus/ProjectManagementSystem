@@ -60,7 +60,7 @@
                   <TableColumn fx:id="typeRequirementColumn" prefWidth="100.0" text="Type" />
                   <TableColumn fx:id="deadlineRequirementColumn" minWidth="0.0" prefWidth="100.0" text="Deadline" />
                   <TableColumn fx:id="estimateRequirementColumn" minWidth="0.0" prefWidth="100.0" text="Estimate" />
-                  <TableColumn fx:id="responsibleTeamMemberReqColumn" minWidth="0.0" prefWidth="100.0" text="Resposible" />
+                  <TableColumn fx:id="responsibleTeamMemberReqColumn" minWidth="0.0" prefWidth="100.0" text="Responsible" />
                </columns>
             </TableView>
          </children>

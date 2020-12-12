@@ -67,6 +67,9 @@ public class TaskViewController {
 
             idField.setText("");
             hoursWorkedField.setText("");
+
+            // path
+            pathLabel.setText(model.getFocusProject().getName() + "/" + model.getFocusRequirement().getTitle() + "/");
         }
         // View button was pressed
         else {
@@ -88,10 +91,12 @@ public class TaskViewController {
             responsibleTeamMemberInputField.setText(model.getFocusTask().getResponsibleTeamMember().getName());
 
             idField.setText(model.getFocusTask().getId());
-            hoursWorkedField.setText(Integer.toString(model.getFocusTask().getTimeWorkedList().getTotalTimeWorked()));
+            hoursWorkedField.setText( String.format("%.2f", (double) model.getFocusTask().getTimeWorkedList().getTotalTimeWorked() / 60 ));
+
+            // path
+            pathLabel.setText(model.getFocusProject().getName() + "/" + model.getFocusRequirement().getTitle() + "/" + model.getFocusTask().getTitle());
         }
         errorLabel.setText("");
-        pathLabel.setText(model.getFocusProject().getName() + "/" + model.getFocusRequirement().getTitle() + "/" + model.getFocusTask().getTitle());
 
         //add Responsible Team Member from Team List
         TextFields.bindAutoCompletion(responsibleTeamMemberInputField, model.getTeamMemberNameList());

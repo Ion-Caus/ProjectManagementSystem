@@ -237,6 +237,8 @@ public class PMSModelManager implements PMSModel {
         try {
             FileSaver.toBinary("EmployeeList", this.employeeList);
             FileSaver.toBinary("ProjectList", this.projectList);
+
+            FileSaver.toXml("ProjectListXml", this.projectList);
         }
         catch (IOException e) {
             System.out.println("Data cannot be saved.");

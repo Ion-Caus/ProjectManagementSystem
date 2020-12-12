@@ -24,7 +24,7 @@
                   <Insets bottom="5.0" left="50.0" top="5.0" />
                </padding>
             </Label>
-            <Label fx:id="pathLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="865.0" text="project/requiremnt/task" textFill="#6b6b6b">
+            <Label fx:id="pathLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="865.0" text="project/requirement/task" textFill="#6b6b6b">
                <padding>
                   <Insets top="10.0" />
                </padding>
