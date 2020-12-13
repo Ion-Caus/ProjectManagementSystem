@@ -141,7 +141,7 @@ public class Requirement implements Serializable {
 
     private static String createReqID() {
         Random random = new Random(System.currentTimeMillis());
-        return  "R" + (10000 + random.nextInt(100000));
+        return  "R" + (10000 + random.nextInt(90000));
     }
 
     private static boolean validStatus(String status) {

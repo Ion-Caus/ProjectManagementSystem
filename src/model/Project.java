@@ -115,7 +115,7 @@ public class Project implements Serializable {
 
     private static String createProjectID() {
         Random random = new Random(System.currentTimeMillis());
-        return  "P" + (10000 + random.nextInt(100000));
+        return  "P" + (10000 + random.nextInt(90000));
     }
 
     private static boolean validStatus(String status) {

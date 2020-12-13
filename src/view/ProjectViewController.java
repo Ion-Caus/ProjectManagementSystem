@@ -88,7 +88,7 @@ public class ProjectViewController {
 
             // update and show time spent
             model.getFocusProject().updateTimeSpent();
-            hoursWorkedField.setText(Integer.toString(model.getFocusProject().getTimeSpent()));
+            hoursWorkedField.setText( String.format("%.2f", (double)model.getFocusProject().getTimeSpent() / 60 ) );
 
             // Open Requirement List Button
             openReqListButton.setVisible(true);

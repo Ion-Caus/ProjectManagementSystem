@@ -38,7 +38,8 @@ public class FileSaver {
     }
 
     public static void toXml(String fileName, ProjectList projectList) throws FileNotFoundException {
-        String path = "data/" + fileName + ".xml";
+        String path = "../../Desktop/ColorItSite/data/" + fileName + ".xml";
+        //TODO (Ion) CHANGE the path
 
         File file = new File(path);
         PrintWriter out = new PrintWriter(file);
@@ -51,23 +52,23 @@ public class FileSaver {
         for(int i = 0; i < projectList.size(); i++) {
             Project project = projectList.getProject(i);
             xml += "\n    <Project>";
-            xml += "\n        <id>" + project.getId() + "</id>";
-            xml += "\n        <name>" + project.getName() + "</name>";
-            xml += "\n        <status>" + project.getStatus() + "</status>";
-            xml += "\n        <deadline>" + project.getDeadline().toString() + "</deadline>";
-            xml += "\n        <estimate>" + project.getEstimate().toString() + "</estimate>";
+            xml += "\n        <idP>" + project.getId() + "</idP>";
+            xml += "\n        <nameP>" + project.getName() + "</nameP>";
+            xml += "\n        <statusP>" + project.getStatus() + "</statusP>";
+            xml += "\n        <deadlineP>" + project.getDeadline().toString() + "</deadlineP>";
+            xml += "\n        <estimateP>" + project.getEstimate().toString() + "</estimateP>";
 
             xml += "\n        <RequirementList>";
             for (int j = 0; j < project.getRequirementList().size(); j++) {
                 Requirement requirement = project.getRequirementList().getRequirement(j);
                 xml += "\n            <Requirement>";
-                xml += "\n                <id>" + requirement.getId() + "</id>";
-                xml += "\n                <title>" + requirement.getTitle() + "</title>";
-                xml += "\n                <description>" + requirement.getDescription() + "</description>";
-                xml += "\n                <status>" + requirement.getStatus() + "</status>";
-                xml += "\n                <type>" + requirement.getType() + "</type>";
-                xml += "\n                <deadline>" + requirement.getDeadline() + "</deadline>";
-                xml += "\n                <estimate>" + requirement.getEstimate() + "</estimate>";
+                xml += "\n                <idR>" + requirement.getId() + "</idR>";
+                xml += "\n                <titleR>" + requirement.getTitle() + "</titleR>";
+                xml += "\n                <descriptionR>" + requirement.getDescription() + "</descriptionR>";
+                xml += "\n                <statusR>" + requirement.getStatus() + "</statusR>";
+                xml += "\n                <typeR>" + requirement.getType() + "</typeR>";
+                xml += "\n                <deadlineR>" + requirement.getDeadline() + "</deadlineR>";
+                xml += "\n                <estimateR>" + requirement.getEstimate() + "</estimateR>";
                 xml += "\n            </Requirement>";
             }
             xml += "\n        </RequirementList>";

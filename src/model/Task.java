@@ -107,7 +107,7 @@ public class Task implements Serializable {
 
     private static String createTaskID() {
         Random random = new Random(System.currentTimeMillis());
-        return  "T" + (10000 + random.nextInt(100000));
+        return  "T" + (10000 + random.nextInt(90000));
     }
 
     private static boolean validStatus(String status) {
