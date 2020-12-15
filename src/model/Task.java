@@ -17,7 +17,7 @@ public class Task implements Serializable {
 
     private TeamMember responsibleTeamMember;
 
-    public static final String STATUS_NOT_STARTED = "Not started";
+    public static final String STATUS_NOT_STARTED = "Not Started";
     public static final String STATUS_IN_PROCESS = "In Process";
     public static final String STATUS_COMPLETED = "Completed";
 
@@ -43,8 +43,8 @@ public class Task implements Serializable {
     }
 
     public void setTitle(String title) {
-        if (title == null || title.isEmpty()) {
-            throw new IllegalArgumentException("Title can not be empty");
+        if (title == null || title.strip().isEmpty()) {
+            throw new IllegalArgumentException("Title cannot be empty");
         }
         this.title = title;
     }

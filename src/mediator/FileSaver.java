@@ -1,4 +1,9 @@
-package model;
+package mediator;
+
+import model.Project;
+import model.ProjectList;
+import model.Requirement;
+import model.Team;
 
 import java.io.*;
 

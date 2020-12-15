@@ -1,4 +1,9 @@
-package model;
+package mediator;
+
+import model.Project;
+import model.Requirement;
+import model.Task;
+import model.TeamMember;
 
 import java.util.ArrayList;
 

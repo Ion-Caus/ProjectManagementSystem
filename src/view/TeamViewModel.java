@@ -2,7 +2,7 @@ package view;
 
 import javafx.collections.*;
 
-import model.PMSModel;
+import mediator.PMSModel;
 import model.TeamMember;
 
 public class TeamViewModel {

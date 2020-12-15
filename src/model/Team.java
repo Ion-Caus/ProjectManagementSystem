@@ -5,9 +5,6 @@ import java.util.ArrayList;
 
 public class Team implements Serializable {
     private ArrayList<TeamMember> teamMemberList;
-    //TODO add Scrum master and Product owner, just one dont forget to check
-    //private ScrumMaster scrumMaster;
-    //private ProductOwner productOwner;
 
     public Team() {
         this.teamMemberList = new ArrayList<>();

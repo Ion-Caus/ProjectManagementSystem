@@ -1,4 +1,6 @@
-package model;
+package mediator;
+
+import model.*;
 
 import java.io.IOException;
 import java.util.ArrayList;

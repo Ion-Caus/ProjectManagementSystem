@@ -17,8 +17,8 @@ public class Project implements Serializable {
     private Team team;
 
     public static final String STATUS_CREATED = "Created";
-    public static final String STATUS_IN_PROCESS = "In process";
-    public static final String STATUS_WAITING_FOR_APPROVAL = "Waiting for approval";
+    public static final String STATUS_IN_PROCESS = "In Process";
+    public static final String STATUS_WAITING_FOR_APPROVAL = "Waiting For Approval";
     public static final String STATUS_FINISHED = "Finished";
 
     public Project(String name,String status, LocalDate deadline, LocalDate estimate, Team team) {
@@ -43,7 +43,7 @@ public class Project implements Serializable {
     }
 
     public void setName(String name) {
-        if(name == null || name.isEmpty()) {
+        if(name == null || name.strip().isEmpty()) {
             throw new IllegalArgumentException("Name cannot be empty");
         }
         this.name = name;
@@ -109,9 +109,6 @@ public class Project implements Serializable {
         }
         this.timeSpent = minutes;
     }
-
-    //TODO public ProductOwner getProductOwner(){}
-    //TODO public ScrumMaster getScrumMaster(){}
 
     private static String createProjectID() {
         Random random = new Random(System.currentTimeMillis());

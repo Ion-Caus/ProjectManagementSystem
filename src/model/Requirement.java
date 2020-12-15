@@ -54,8 +54,8 @@ public class Requirement implements Serializable {
     }
 
     public void setTitle(String title) {
-        if (title == null || title.isEmpty()) {
-            throw new IllegalArgumentException("Title can not be empty");
+        if (title == null || title.strip().isEmpty()) {
+            throw new IllegalArgumentException("Title cannot be empty");
         }
         this.title = title;
     }

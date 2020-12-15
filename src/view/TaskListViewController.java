@@ -4,7 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.Region;
 
-import model.PMSModel;
+import mediator.PMSModel;
 import model.Task;
 
 import java.util.Optional;

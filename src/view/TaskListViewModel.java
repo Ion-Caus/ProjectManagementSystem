@@ -2,7 +2,7 @@ package view;
 
 import javafx.collections.*;
 
-import model.PMSModel;
+import mediator.PMSModel;
 import model.Task;
 
 public class TaskListViewModel {

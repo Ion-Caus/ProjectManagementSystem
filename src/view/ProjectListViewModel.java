@@ -3,7 +3,7 @@ package view;
 import javafx.collections.*;
 
 import model.Project;
-import model.PMSModel;
+import mediator.PMSModel;
 
 public class ProjectListViewModel {
     private ObservableList<ProjectViewModel> projectList;

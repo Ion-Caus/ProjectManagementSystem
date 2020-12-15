@@ -5,7 +5,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 
-import model.PMSModel;
+import mediator.PMSModel;
 
 public class ViewHandler {
     private Scene currentScene;
