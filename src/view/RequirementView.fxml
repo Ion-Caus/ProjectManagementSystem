@@ -24,7 +24,7 @@
                   <Insets bottom="5.0" left="50.0" top="5.0" />
                </padding>
             </Label>
-            <Label fx:id="pathLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="865.0" text="project/requiremnt" textFill="#6b6b6b">
+            <Label fx:id="pathLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="865.0" text="project/requirement" textFill="#6b6b6b">
                <padding>
                   <Insets top="10.0" />
                </padding>
@@ -190,12 +190,12 @@
                               <Font size="18.0" />
                            </font>
                         </Button>
-                        <Button mnemonicParsing="false" onAction="#submitButtonPressed" prefWidth="80.0" text="Submit">
+                        <Button mnemonicParsing="false" onAction="#submitButtonPressed" prefHeight="40.0" prefWidth="90.0" text="Submit">
                            <font>
                               <Font size="18.0" />
                            </font>
                         </Button>
-                        <Button alignment="CENTER" mnemonicParsing="false" onAction="#cancelButtonPressed" prefWidth="80.0" text="Cancel">
+                        <Button alignment="CENTER" mnemonicParsing="false" onAction="#cancelButtonPressed" prefHeight="40.0" prefWidth="90.0" text="Cancel">
                            <font>
                               <Font size="18.0" />
                            </font>
