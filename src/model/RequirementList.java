@@ -38,5 +38,4 @@ public class RequirementList implements Serializable {
     public ArrayList<Requirement> getRequirementList() {
         return requirementList;
     }
-
 }

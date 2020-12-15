@@ -35,6 +35,7 @@ public interface PMSModel {
     Project getProject(int index);
 
     ArrayList<Project> getProjectList();
+    ArrayList<String> getProjectNameList();
 
     void setFocusProject(Project project);
     Project getFocusProject();
@@ -49,6 +50,7 @@ public interface PMSModel {
     Requirement getRequirement(int index);
 
     ArrayList<Requirement> getRequirementList();
+    ArrayList<String> getRequirementTitleList();
 
     void setFocusRequirement(Requirement requirement);
     Requirement getFocusRequirement();
@@ -63,6 +65,7 @@ public interface PMSModel {
     Task getTask(int index);
 
     ArrayList<Task> getTaskList();
+    ArrayList<String> getTaskTitleList();
 
     void setFocusTask(Task task);
     Task getFocusTask();

@@ -1,13 +1,17 @@
 package view;
 
+import javafx.collections.*;
+
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 
 import javafx.scene.control.*;
 import javafx.scene.layout.Region;
 
-import model.Project;
-import model.PMSModel;
-import model.TeamMember;
+import model.*;
+
+import org.controlsfx.control.textfield.AutoCompletionBinding;
+import org.controlsfx.control.textfield.TextFields;
 
 import java.util.Optional;
 
@@ -25,6 +29,14 @@ public class ProjectListViewController {
     @FXML private TableView<TeamMemberViewModel> employeeListTable;
     @FXML private TableColumn<TeamMemberViewModel, String> nameEmployeeColumn;
     @FXML private Label errorLabelEmployee;
+
+    //search tab
+    @FXML private TextField searchInputField;
+    private AutoCompletionBinding<String> autoCompletionBinding;
+    @FXML private ComboBox<String> choiceBox;
+    @FXML private ListView<String> resultListView;
+    @FXML private Label infoLabelSearch;
+    @FXML private Label errorLabelSearch;
 
     private ViewHandler viewHandler;
     private PMSModel model;
@@ -53,9 +65,6 @@ public class ProjectListViewController {
         estimateProjectColumn.setCellValueFactory(cellDate -> cellDate.getValue().getEstimateProperty());
 
         projectListTable.setItems(viewModelProject.getProjectList());
-
-        errorLabelProject.setText("");
-        viewModelProject.update();
         //---------------------
 
 
@@ -63,10 +72,14 @@ public class ProjectListViewController {
         nameEmployeeColumn.setCellValueFactory(cellData -> cellData.getValue().getNameProperty());
 
         employeeListTable.setItems(viewModelEmployee.getEmployeeList());
-
-        errorLabelEmployee.setText("");
-        viewModelEmployee.update();
         //-----------------------
+
+        //---- Search Tab ----
+        choiceBox.getItems().addAll("Project", "Requirement", "Task", "Employee");
+        choiceBox.getSelectionModel().select("Project");
+        //--------------------
+
+        reset();
     }
 
     public void reset() {
@@ -75,6 +88,19 @@ public class ProjectListViewController {
 
         errorLabelEmployee.setText("");
         viewModelEmployee.update();
+
+        //---- Search Tab ----
+            //autocompletion set default to projects name
+        searchInputField.setText("");
+        autoCompletionBinding = TextFields.bindAutoCompletion(searchInputField, model.getProjectNameList());
+
+            //info label
+        infoLabelSearch.setText("");
+
+
+            //error label
+        errorLabelSearch.setText("");
+        //--------------------
     }
 
     public Region getRoot() {
@@ -149,7 +175,7 @@ public class ProjectListViewController {
             errorLabelEmployee.setText("Please select an item");
         }
     }
-
+    //-----------------------------------------
 
     //---------- EmployeeList Methods ----------
     @FXML
@@ -204,4 +230,158 @@ public class ProjectListViewController {
         Optional<ButtonType> result = alert.showAndWait();
         return result.isPresent() && result.get() == ButtonType.OK;
     }
+    //------------------------------------------
+
+    //------------- Search Methods -------------
+    @FXML
+    private void searchButtonPressed() {
+        ObservableList<String > items = FXCollections.observableArrayList();
+
+        switch (choiceBox.getValue()) {
+            // search by project name
+            case "Project":
+                infoLabelSearch.setText("The list contains all the projects with the name '" + searchInputField.getText().strip() + "'");
+                for (Project project : model.getProjectList()) {
+                    if (project.getName().equals(searchInputField.getText().strip())) {
+                        items.add(project.getId() + "  " + project.getName());
+                    }
+                }
+                break;
+            // search by requirement name
+            case "Requirement":
+                infoLabelSearch.setText("The list contains all the requirements with the name '" + searchInputField.getText().strip() + "'");
+                for (Project project : model.getProjectList()) {
+                    for (Requirement requirement : project.getRequirementList().getRequirementList()) {
+                        if (requirement.getTitle().equals(searchInputField.getText().strip())) {
+                            items.add(String.format(
+                                    "%s  %s  (%s  %s)",
+                                    requirement.getId(),
+                                    requirement.getTitle(),
+                                    project.getId(),
+                                    project.getName()
+                            ));
+                        }
+                    }
+                }
+                break;
+            // search by task name
+            case "Task":
+                infoLabelSearch.setText("The list contains all the task with the name '" + searchInputField.getText().strip() + "'");
+                for (Project project : model.getProjectList()) {
+                    for (Requirement requirement : project.getRequirementList().getRequirementList()) {
+                        for (Task task : requirement.getTaskList().getTaskList()) {
+                            if (task.getTitle().equals(searchInputField.getText().strip())) {
+                                items.add(String.format(
+                                        "%s  %s (%s/%s/)",
+                                        task.getId(),
+                                        task.getTitle(),
+                                        project.getName(),
+                                        requirement.getTitle()
+                                ));
+                            }
+                        }
+                    }
+                }
+                break;
+            // search task by task employee
+            case "Employee":
+                infoLabelSearch.setText("The list contains all the tasks '" + searchInputField.getText().strip() + "' is responsible for.");
+                for (Project project : model.getProjectList()) {
+                    for (Requirement requirement : project.getRequirementList().getRequirementList()) {
+                        for (Task task : requirement.getTaskList().getTaskList()) {
+                            if (task.getResponsibleTeamMember().getName().equals(searchInputField.getText().strip())) {
+                                items.add(String.format(
+                                        "%s  %s (%s/%s/)",
+                                        task.getId(),
+                                        task.getTitle(),
+                                        project.getName(),
+                                        requirement.getTitle()
+                                ));
+                            }
+                        }
+                    }
+                }
+                break;
+        }
+        resultListView.setItems(items);
+    }
+
+    @FXML
+    private void goToButtonPressed() {
+        try {
+            String selectedItem = resultListView.getSelectionModel().getSelectedItem();
+
+            model.setAdding(false);
+            switch (choiceBox.getValue()) {
+                case "Project":
+                    for (Project project : model.getProjectList()) {
+                        if (project.getId().equals(selectedItem.split(" ")[0])) {
+                            model.setFocusProject(project);
+                            viewHandler.openView("ProjectView");
+                        }
+                    }
+                    break;
+                case "Requirement":
+                    for (Project project : model.getProjectList()) {
+                        for (Requirement requirement : project.getRequirementList().getRequirementList()) {
+                            if (requirement.getId().equals(selectedItem.split(" ")[0])) {
+                                model.setFocusProject(project);
+                                model.setFocusRequirement(requirement);
+                                viewHandler.openView("RequirementView");
+                            }
+                        }
+                    }
+                    break;
+                case "Task":
+                case "Employee":
+                    for (Project project : model.getProjectList()) {
+                        for (Requirement requirement : project.getRequirementList().getRequirementList()) {
+                            for (Task task : requirement.getTaskList().getTaskList()) {
+                                if (task.getId().equals(selectedItem.split(" ")[0])) {
+                                    model.setFocusProject(project);
+                                    model.setFocusRequirement(requirement);
+                                    model.setFocusTask(task);
+                                    viewHandler.openView("TaskView");
+                                }
+                            }
+                        }
+                    }
+                    break;
+            }
+        }
+        catch (Exception e) {
+            errorLabelSearch.setText("Please select an item");
+        }
+    }
+
+    @FXML
+    private void updateSearchAutocompletion() {
+        infoLabelSearch.setText("");
+        resultListView.getItems().clear();
+        // clear the auto completion list
+        autoCompletionBinding.dispose();
+
+        switch (choiceBox.getValue()) {
+            case "Project" :
+                TextFields.bindAutoCompletion(searchInputField, model.getProjectNameList());
+                break;
+            case "Requirement" :
+                TextFields.bindAutoCompletion(searchInputField, model.getRequirementTitleList());
+                break;
+            case "Task" :
+                TextFields.bindAutoCompletion(searchInputField, model.getTaskTitleList());
+                break;
+            case "Employee" :
+                TextFields.bindAutoCompletion(searchInputField, model.getEmployeeNameList());
+                break;
+        }
+    }
+
+    @FXML
+    private void onEnterSearch(ActionEvent event) {
+        if (event.getSource() == searchInputField) {
+            searchButtonPressed();
+        }
+    }
+    //------------------------------------------
 }

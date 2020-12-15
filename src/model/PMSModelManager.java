@@ -135,6 +135,16 @@ public class PMSModelManager implements PMSModel {
         return projectList.getProjectList();
     }
 
+    @Override
+    public ArrayList<String> getProjectNameList() {
+        ArrayList<String> names = new ArrayList<>();
+
+        for (Project project: projectList.getProjectList()) {
+            names.add(project.getName());
+        }
+        return names;
+    }
+
 
     @Override
     public void setFocusProject(Project project) {
@@ -179,6 +189,18 @@ public class PMSModelManager implements PMSModel {
     }
 
     @Override
+    public ArrayList<String> getRequirementTitleList() {
+        ArrayList<String> titles = new ArrayList<>();
+
+        for (Project project: projectList.getProjectList()) {
+            for (Requirement requirement: project.getRequirementList().getRequirementList()) {
+                titles.add(requirement.getTitle());
+            }
+        }
+        return titles;
+    }
+
+    @Override
     public void setFocusRequirement(Requirement requirement) {
         this.focusRequirement = requirement;
     }
@@ -218,6 +240,20 @@ public class PMSModelManager implements PMSModel {
     @Override
     public ArrayList<Task> getTaskList() {
         return focusRequirement.getTaskList().getTaskList();
+    }
+
+    @Override
+    public ArrayList<String> getTaskTitleList() {
+        ArrayList<String> titles = new ArrayList<>();
+
+        for (Project project: projectList.getProjectList()) {
+            for (Requirement requirement: project.getRequirementList().getRequirementList()) {
+                for (Task task: requirement.getTaskList().getTaskList()) {
+                    titles.add(task.getTitle());
+                }
+            }
+        }
+        return titles;
     }
 
     @Override
