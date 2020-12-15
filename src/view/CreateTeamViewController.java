@@ -80,16 +80,22 @@ public class CreateTeamViewController {
                     model.getFocusProject().getTeam().addTeamMember(teamMember.copy());
                     break;
                 case "Scrum Master":
+                    if (model.isPresent("ScrumMaster")) {
+                        throw new IllegalArgumentException("Scrum Master is already present in the team.");
+                    }
                     model.getFocusProject().getTeam().addTeamMember(new ScrumMaster(teamMember.getName()));
                     break;
                 case "Product Owner":
+                    if (model.isPresent("ProductOwner")) {
+                        throw new IllegalArgumentException("Product Owner is already present in the team.");
+                    }
                     model.getFocusProject().getTeam().addTeamMember(new ProductOwner(teamMember.getName()));
                     break;
             }
 
             reset();
         }
-        catch (IllegalArgumentException e) {
+        catch (IllegalArgumentException | ClassNotFoundException e) {
             errorLabel.setText(e.getMessage());
         }
     }

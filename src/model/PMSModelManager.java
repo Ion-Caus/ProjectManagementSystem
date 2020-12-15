@@ -2,6 +2,7 @@ package model;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class PMSModelManager implements PMSModel {
     private ProjectList projectList;
@@ -79,6 +80,20 @@ public class PMSModelManager implements PMSModel {
         return employeeList.getTeamMemberNameList();
     }
 
+    // ------ Team -----
+    @Override
+    public boolean isPresent(String role) throws ClassNotFoundException {
+        if (!Arrays.asList("ScrumMaster", "ProductOwner", "TeamMember").contains(role)) {
+            throw new IllegalArgumentException("Invalid role given. Roles: [ScrumMaster, ProductOwner, TeamMember]");
+        }
+        for (TeamMember teamMember: focusProject.getTeam().getTeamMemberList()) {
+            if (Class.forName("model." + role).isInstance(teamMember)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     @Override
     public TeamMember getTeamMember(String name) {
         if (name == null || name.isEmpty()) {
@@ -97,6 +112,7 @@ public class PMSModelManager implements PMSModel {
     public TeamMember getTeamMember(int index) {
         return focusProject.getTeam().getTeamMember(index);
     }
+
 
     @Override
     public ArrayList<String> getTeamMemberNameList() {

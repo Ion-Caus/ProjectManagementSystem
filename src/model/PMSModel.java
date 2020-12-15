@@ -20,8 +20,11 @@ public interface PMSModel {
     ArrayList<String> getEmployeeNameList();
 
     //----Team----
+    boolean isPresent(String role) throws ClassNotFoundException;
+
     TeamMember getTeamMember(String name);
     TeamMember getTeamMember(int index);
+
 
     ArrayList<String> getTeamMemberNameList();
 
