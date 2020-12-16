@@ -255,11 +255,11 @@ public class ProjectListViewController {
                     for (Requirement requirement : project.getRequirementList().getRequirementList()) {
                         if (requirement.getTitle().equals(searchInputField.getText().strip())) {
                             items.add(String.format(
-                                    "%s  %s  (%s  %s)",
+                                    "%s  %s  (%s/%s)",
                                     requirement.getId(),
                                     requirement.getTitle(),
-                                    project.getId(),
-                                    project.getName()
+                                    project.getName(),
+                                    requirement.getTitle()
                             ));
                         }
                     }
@@ -273,11 +273,12 @@ public class ProjectListViewController {
                         for (Task task : requirement.getTaskList().getTaskList()) {
                             if (task.getTitle().equals(searchInputField.getText().strip())) {
                                 items.add(String.format(
-                                        "%s  %s (%s/%s/)",
+                                        "%s  %s (%s/%s/%s)",
                                         task.getId(),
                                         task.getTitle(),
                                         project.getName(),
-                                        requirement.getTitle()
+                                        requirement.getTitle(),
+                                        task.getTitle()
                                 ));
                             }
                         }
@@ -292,11 +293,12 @@ public class ProjectListViewController {
                         for (Task task : requirement.getTaskList().getTaskList()) {
                             if (task.getResponsibleTeamMember().getName().equals(searchInputField.getText().strip())) {
                                 items.add(String.format(
-                                        "%s  %s (%s/%s/)",
+                                        "%s  %s (%s/%s/%s)",
                                         task.getId(),
                                         task.getTitle(),
                                         project.getName(),
-                                        requirement.getTitle()
+                                        requirement.getTitle(),
+                                        task.getTitle()
                                 ));
                             }
                         }
@@ -313,8 +315,8 @@ public class ProjectListViewController {
             String selectedItem = resultListView.getSelectionModel().getSelectedItem();
 
             model.setAdding(false);
-            switch (choiceBox.getValue()) {
-                case "Project":
+            switch (selectedItem.split(" ")[0].charAt(0)) {
+                case 'P':
                     for (Project project : model.getProjectList()) {
                         if (project.getId().equals(selectedItem.split(" ")[0])) {
                             model.setFocusProject(project);
@@ -322,7 +324,7 @@ public class ProjectListViewController {
                         }
                     }
                     break;
-                case "Requirement":
+                case 'R':
                     for (Project project : model.getProjectList()) {
                         for (Requirement requirement : project.getRequirementList().getRequirementList()) {
                             if (requirement.getId().equals(selectedItem.split(" ")[0])) {
@@ -333,8 +335,7 @@ public class ProjectListViewController {
                         }
                     }
                     break;
-                case "Task":
-                case "Employee":
+                case 'T':
                     for (Project project : model.getProjectList()) {
                         for (Requirement requirement : project.getRequirementList().getRequirementList()) {
                             for (Task task : requirement.getTaskList().getTaskList()) {
@@ -358,7 +359,7 @@ public class ProjectListViewController {
     @FXML
     private void updateSearchAutocompletion() {
         infoLabelSearch.setText("");
-        resultListView.getItems().clear();
+
         // clear the auto completion list
         autoCompletionBinding.dispose();
 

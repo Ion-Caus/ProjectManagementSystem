@@ -19,7 +19,7 @@ public class TimeContainer implements Serializable {
     }
 
     public int convertToInteger(String timeString) {
-        if (timeString == null || timeString.isEmpty()) {
+        if (timeString == null || timeString.strip().isEmpty()) {
             throw new IllegalArgumentException("Please enter the time.");
         }
 
