@@ -110,7 +110,7 @@
                            <children>
                               <HBox alignment="CENTER" prefHeight="54.0" prefWidth="604.0" spacing="10.0">
                                  <children>
-                                    <Label text="Name">
+                                    <Label text="ID/Name">
                                        <font>
                                           <Font size="16.0" />
                                        </font>

@@ -177,9 +177,9 @@ public class ProjectViewController {
     @FXML
     private void addTeamMemberButton() {
         try {
-            // set the focus to the last one (just created)
             if (model.isAdding()) {
                 createProject();
+                // set the focus to the last one (just created)
                 model.setFocusProject(model.getProjectList().get(model.projectListSize() - 1));
                 model.setAdding(false);
             }
