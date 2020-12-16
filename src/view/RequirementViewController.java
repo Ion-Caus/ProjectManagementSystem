@@ -64,13 +64,11 @@ public class RequirementViewController {
 
             // Deadline Picker
             deadlinePicker.setEditable(false);
-            // setting the default deadline in 2 weeks
-            deadlinePicker.setValue(LocalDate.now().plusDays(14));
+            deadlinePicker.setValue(LocalDate.now());
 
             // Estimate Picker
             estimatePicker.setEditable(false);
-            // setting the default deadline in 1 weeks
-            estimatePicker.setValue(LocalDate.now().plusDays(7));
+            estimatePicker.setValue(LocalDate.now());
 
             // responsible Team Member
             responsibleTeamMemberInputField.setText("");
@@ -133,6 +131,16 @@ public class RequirementViewController {
         deadlinePicker.setOnAction(event -> deadlinePicker.getEditor().setText(
                 DateTimeFormatter.ofPattern("yyyy-MM-dd").format(deadlinePicker.getValue())
         ));
+
+        // setting limits to deadline
+        deadlinePicker.setDayCellFactory(dateCell -> new DateCell() {
+            @Override
+            public void updateItem(LocalDate item, boolean empty) {
+                super.updateItem(item, empty);
+                // from current date until project's deadline
+                setDisable(item.isBefore(LocalDate.now()) || item.isAfter(model.getFocusProject().getDeadline()));
+            }});
+
         //formatting the Estimate DatePicker from MM/dd/yyyy to yyyy-MM-dd
         estimatePicker.getEditor().setText(
                 DateTimeFormatter.ofPattern("yyyy-MM-dd").format(estimatePicker.getValue())
@@ -140,6 +148,15 @@ public class RequirementViewController {
         estimatePicker.setOnAction(event -> estimatePicker.getEditor().setText(
                 DateTimeFormatter.ofPattern("yyyy-MM-dd").format(estimatePicker.getValue())
         ));
+
+        // setting limits to estimate
+        estimatePicker.setDayCellFactory(dateCell -> new DateCell() {
+            @Override
+            public void updateItem(LocalDate item, boolean empty) {
+                super.updateItem(item, empty);
+                // from current date until project's estimate
+                setDisable(item.isBefore(LocalDate.now()) || item.isAfter(model.getFocusProject().getEstimate()));
+            }});
     }
 
     public Region getRoot() {
