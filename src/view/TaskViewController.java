@@ -169,6 +169,10 @@ public class TaskViewController {
     private void submitButtonPressed() {
         try {
             createTask();
+            if (statusBox.getSelectionModel().getSelectedItem().equals(Task.STATUS_COMPLETED) &&
+                    !model.isAdding() ) {
+                model.getFocusRequirement().updateStatus();
+            }
             viewHandler.openView("TaskListView");
         }
         catch (IllegalArgumentException e) {

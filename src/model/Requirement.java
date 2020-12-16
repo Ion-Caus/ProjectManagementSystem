@@ -71,6 +71,15 @@ public class Requirement implements Serializable {
         this.status = status;
     }
 
+    public void updateStatus() {
+        for (Task task: taskList.getTaskList()) {
+            if (!task.getStatus().equals(Task.STATUS_COMPLETED)) {
+                return;
+            }
+        }
+        this.setStatus(Requirement.STATUS_WAITING_FOR_APPROVAL);
+    }
+
     public String getType() {
         return type;
     }

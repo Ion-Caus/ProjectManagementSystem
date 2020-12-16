@@ -198,6 +198,12 @@ public class RequirementViewController {
                 model.getFocusRequirement().setEstimate(estimatePicker.getValue());
                 model.getFocusRequirement().setResponsibleTeamMember(model.getTeamMember(responsibleTeamMemberInputField.getText().strip()));
             }
+
+            if (statusBox.getSelectionModel().getSelectedItem().equals(Requirement.STATUS_APPROVED) &&
+                    !model.isAdding() ) {
+                model.getFocusProject().updateStatus();
+            }
+
             viewHandler.openView("RequirementListView");
         }
         catch (IllegalArgumentException e) {

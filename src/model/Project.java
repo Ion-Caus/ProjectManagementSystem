@@ -60,6 +60,15 @@ public class Project implements Serializable {
         this.status = status;
     }
 
+    public void updateStatus() {
+        for (Requirement requirement: requirementList.getRequirementList()) {
+            if (!requirement.getStatus().equals(Requirement.STATUS_APPROVED)) {
+                return;
+            }
+        }
+        this.setStatus(Project.STATUS_WAITING_FOR_APPROVAL);
+    }
+
     public RequirementList getRequirementList() {
         return requirementList;
     }
