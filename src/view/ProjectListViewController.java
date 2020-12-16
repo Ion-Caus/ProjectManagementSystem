@@ -246,7 +246,7 @@ public class ProjectListViewController {
         switch (choiceBox.getValue()) {
             // search by project name
             case "Project":
-                infoLabelSearch.setText("The list contains " + identifier + " '" + searchInputField.getText().strip() + "'");
+                infoLabelSearch.setText("The list contains " + identifier + " '" + searchInputField.getText() + "'");
                 for (Project project : model.getProjectList()) {
                     if ( project.getName().equals(searchInputField.getText()) ||
                             project.getId().equals(searchInputField.getText()) ) {
@@ -256,7 +256,7 @@ public class ProjectListViewController {
                 break;
             // search by requirement name
             case "Requirement":
-                infoLabelSearch.setText("The list contains " + identifier + " '" + searchInputField.getText().strip() + "'");
+                infoLabelSearch.setText("The list contains " + identifier + " '" + searchInputField.getText() + "'");
                 for (Project project : model.getProjectList()) {
                     for (Requirement requirement : project.getRequirementList().getRequirementList()) {
                         if ( requirement.getTitle().equals(searchInputField.getText()) ||
@@ -274,11 +274,11 @@ public class ProjectListViewController {
                 break;
             // search by task name
             case "Task":
-                infoLabelSearch.setText("The list contains " + identifier + " '" + searchInputField.getText().strip() + "'");
+                infoLabelSearch.setText("The list contains " + identifier + " '" + searchInputField.getText() + "'");
                 for (Project project : model.getProjectList()) {
                     for (Requirement requirement : project.getRequirementList().getRequirementList()) {
                         for (Task task : requirement.getTaskList().getTaskList()) {
-                            if ( task.getTitle().equals(searchInputField.getText().strip()) ||
+                            if ( task.getTitle().equals(searchInputField.getText()) ||
                                     task.getId().equals(searchInputField.getText()) ) {
                                 items.add(String.format(
                                         "%s  %s (%s/%s/%s)",
@@ -295,12 +295,12 @@ public class ProjectListViewController {
                 break;
             // search task by task employee
             case "Employee":
-                infoLabelSearch.setText("The list contains all the tasks '" + searchInputField.getText().strip() + "' is responsible for.");
+                infoLabelSearch.setText("The list contains all the tasks '" + searchInputField.getText() + "' is responsible for.");
 
                 for (Project project : model.getProjectList()) {
                     for (Requirement requirement : project.getRequirementList().getRequirementList()) {
                         for (Task task : requirement.getTaskList().getTaskList()) {
-                            if (task.getResponsibleTeamMember().getName().equals(searchInputField.getText().strip())) {
+                            if (task.getResponsibleTeamMember().getName().equals(searchInputField.getText())) {
                                 items.add(String.format(
                                         "%s  %s (%s/%s/%s)",
                                         task.getId(),
