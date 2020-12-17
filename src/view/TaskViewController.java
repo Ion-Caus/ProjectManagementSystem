@@ -99,14 +99,6 @@ public class TaskViewController {
         //add Responsible Team Member from Team List
         TextFields.bindAutoCompletion(responsibleTeamMemberInputField, model.getTeamMemberNameList());
 
-        //formatting the Deadline DatePicker from MM/dd/yyyy to yyyy-MM-dd
-        deadlinePicker.getEditor().setText(
-                DateTimeFormatter.ofPattern("yyyy-MM-dd").format(deadlinePicker.getValue())
-        );
-        deadlinePicker.setOnAction(event -> deadlinePicker.getEditor().setText(
-                DateTimeFormatter.ofPattern("yyyy-MM-dd").format(deadlinePicker.getValue())
-        ));
-
         // setting limits to deadline
         deadlinePicker.setDayCellFactory(dateCell -> new DateCell() {
             @Override
@@ -115,13 +107,12 @@ public class TaskViewController {
                 // from current date until requirement's deadline
                 setDisable(item.isBefore(LocalDate.now()) || item.isAfter(model.getFocusRequirement().getDeadline()));
             }});
-
-        //formatting the Estimate DatePicker from MM/dd/yyyy to yyyy-MM-dd
-        estimatePicker.getEditor().setText(
-                DateTimeFormatter.ofPattern("yyyy-MM-dd").format(estimatePicker.getValue())
+        //formatting the Deadline DatePicker from MM/dd/yyyy to yyyy-MM-dd
+        deadlinePicker.getEditor().setText(
+                DateTimeFormatter.ofPattern("yyyy-MM-dd").format(deadlinePicker.getValue())
         );
-        estimatePicker.setOnAction(event -> estimatePicker.getEditor().setText(
-                DateTimeFormatter.ofPattern("yyyy-MM-dd").format(estimatePicker.getValue())
+        deadlinePicker.setOnAction(event -> deadlinePicker.getEditor().setText(
+                DateTimeFormatter.ofPattern("yyyy-MM-dd").format(deadlinePicker.getValue())
         ));
 
         // setting limits to estimate
@@ -132,6 +123,13 @@ public class TaskViewController {
                 // from current date until requirement's estimate
                 setDisable(item.isBefore(LocalDate.now()) || item.isAfter(model.getFocusRequirement().getEstimate()));
             }});
+        //formatting the Estimate DatePicker from MM/dd/yyyy to yyyy-MM-dd
+        estimatePicker.getEditor().setText(
+                DateTimeFormatter.ofPattern("yyyy-MM-dd").format(estimatePicker.getValue())
+        );
+        estimatePicker.setOnAction(event -> estimatePicker.getEditor().setText(
+                DateTimeFormatter.ofPattern("yyyy-MM-dd").format(estimatePicker.getValue())
+        ));
     }
 
     public Region getRoot() {
